@@ -13,12 +13,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Siteimprove\\PxaSiteimprove\\": "Classes"
+            "Pixelant\\PxaSiteimprove\\": "Classes"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Siteimprove\\PxaSiteimprove\\Tests\\": "Tests"
+            "Pixelant\\PxaSiteimprove\\Tests\\": "Tests"
         }
     },
     "replace": {
