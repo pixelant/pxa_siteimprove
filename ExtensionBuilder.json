@@ -91,8 +91,8 @@
         },
         "extensionKey": "pxa_siteimprove",
         "name": "Siteimprove",
-        "originalExtensionKey": "",
-        "originalVendorName": "",
+        "originalExtensionKey": "pxa_siteimprove",
+        "originalVendorName": "Siteimprove",
         "persons": [
             {
                 "company": "Pixelant AB",
@@ -102,11 +102,11 @@
             }
         ],
         "plugins": [],
-        "vendorName": "Siteimprove"
+        "vendorName": "Pixelant"
     },
     "wires": [],
     "log": {
-        "last_modified": "2018-04-03 10:48",
+        "last_modified": "2018-04-03 11:07",
         "extension_builder_version": "8.7.0",
         "be_user": " (1)"
     }

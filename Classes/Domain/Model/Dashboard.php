@@ -1,5 +1,5 @@
 <?php
-namespace Siteimprove\PxaSiteimprove\Domain\Model;
+namespace Pixelant\PxaSiteimprove\Domain\Model;
 
 /***
  *

@@ -1,5 +1,5 @@
 <?php
-namespace Siteimprove\PxaSiteimprove\Tests\Unit\Domain\Model;
+namespace Pixelant\PxaSiteimprove\Tests\Unit\Domain\Model;
 
 /**
  * Test case.
@@ -9,14 +9,14 @@ namespace Siteimprove\PxaSiteimprove\Tests\Unit\Domain\Model;
 class DashboardTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
     /**
-     * @var \Siteimprove\PxaSiteimprove\Domain\Model\Dashboard
+     * @var \Pixelant\PxaSiteimprove\Domain\Model\Dashboard
      */
     protected $subject = null;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->subject = new \Siteimprove\PxaSiteimprove\Domain\Model\Dashboard();
+        $this->subject = new \Pixelant\PxaSiteimprove\Domain\Model\Dashboard();
     }
 
     protected function tearDown()

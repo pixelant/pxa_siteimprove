@@ -1,5 +1,5 @@
 <?php
-namespace Siteimprove\PxaSiteimprove\Controller;
+namespace Pixelant\PxaSiteimprove\Controller;
 
 /***
  *

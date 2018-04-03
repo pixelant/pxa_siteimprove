@@ -1,5 +1,5 @@
 <?php
-namespace Siteimprove\PxaSiteimprove\Domain\Repository;
+namespace Pixelant\PxaSiteimprove\Domain\Repository;
 
 /***
  *

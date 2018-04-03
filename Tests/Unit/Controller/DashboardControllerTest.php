@@ -1,5 +1,5 @@
 <?php
-namespace Siteimprove\PxaSiteimprove\Tests\Unit\Controller;
+namespace Pixelant\PxaSiteimprove\Tests\Unit\Controller;
 
 /**
  * Test case.
@@ -9,14 +9,14 @@ namespace Siteimprove\PxaSiteimprove\Tests\Unit\Controller;
 class DashboardControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
 {
     /**
-     * @var \Siteimprove\PxaSiteimprove\Controller\DashboardController
+     * @var \Pixelant\PxaSiteimprove\Controller\DashboardController
      */
     protected $subject = null;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->subject = $this->getMockBuilder(\Siteimprove\PxaSiteimprove\Controller\DashboardController::class)
+        $this->subject = $this->getMockBuilder(\Pixelant\PxaSiteimprove\Controller\DashboardController::class)
             ->setMethods(['redirect', 'forward', 'addFlashMessage'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -37,7 +37,7 @@ class DashboardControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $dashboardRepository = $this->getMockBuilder(\Siteimprove\PxaSiteimprove\Domain\Repository\DashboardRepository::class)
+        $dashboardRepository = $this->getMockBuilder(\Pixelant\PxaSiteimprove\Domain\Repository\DashboardRepository::class)
             ->setMethods(['findAll'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -56,7 +56,7 @@ class DashboardControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase
      */
     public function showActionAssignsTheGivenDashboardToView()
     {
-        $dashboard = new \Siteimprove\PxaSiteimprove\Domain\Model\Dashboard();
+        $dashboard = new \Pixelant\PxaSiteimprove\Domain\Model\Dashboard();
 
         $view = $this->getMockBuilder(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface::class)->getMock();
         $this->inject($this->subject, 'view', $view);
