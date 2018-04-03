@@ -20,7 +20,7 @@ class DashboardController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     /**
      * dashboardRepository
      *
-     * @var \Siteimprove\PxaSiteimprove\Domain\Repository\DashboardRepository
+     * @var \Pixelant\PxaSiteimprove\Domain\Repository\DashboardRepository
      * @inject
      */
     protected $dashboardRepository = null;
@@ -39,10 +39,10 @@ class DashboardController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContro
     /**
      * action show
      *
-     * @param \Siteimprove\PxaSiteimprove\Domain\Model\Dashboard $dashboard
+     * @param \Pixelant\PxaSiteimprove\Domain\Model\Dashboard $dashboard
      * @return void
      */
-    public function showAction(\Siteimprove\PxaSiteimprove\Domain\Model\Dashboard $dashboard)
+    public function showAction(\Pixelant\PxaSiteimprove\Domain\Model\Dashboard $dashboard)
     {
         $this->view->assign('dashboard', $dashboard);
     }
