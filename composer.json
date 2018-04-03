@@ -1,0 +1,28 @@
+{
+    "name": "siteimprove/pxa-siteimprove",
+    "type": "typo3-cms-extension",
+    "description": "",
+    "authors": [
+        {
+            "name": "Mattias Nilsson",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "typo3/cms-core": "^8.7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Siteimprove\\PxaSiteimprove\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Siteimprove\\PxaSiteimprove\\Tests\\": "Tests"
+        }
+    },
+    "replace": {
+        "pxa_siteimprove": "self.version",
+        "typo3-ter/pxa-siteimprove": "self.version"
+    }
+}
