@@ -19,6 +19,7 @@ call_user_func(
                     'access' => 'user,group',
                     'icon'   => 'EXT:pxa_siteimprove/Resources/Public/Icons/user_mod_dashboard.svg',
                     'labels' => 'LLL:EXT:pxa_siteimprove/Resources/Private/Language/locallang_dashboard.xlf',
+                    'navigationComponentId' => 'typo3-pagetree'
                 ]
             );
 
