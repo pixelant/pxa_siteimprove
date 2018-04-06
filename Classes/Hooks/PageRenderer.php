@@ -20,7 +20,7 @@ use TYPO3\CMS\Backend\Controller\PageLayoutController;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Database\ConnectionPool;
+use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
 
 /**
  * Class which adds the necessary resources for Siteimprove (https://siteimprove.com/).
@@ -38,11 +38,18 @@ class PageRenderer implements SingletonInterface
         // Add the resources only to the 'Page' module
         if (isset($GLOBALS['SOBE']) && get_class($GLOBALS['SOBE']) === PageLayoutController::class || is_subclass_of($GLOBALS['SOBE'],
                 PageLayoutController::class)) {
+            $settings = ExtensionManagerConfigurationService::getSettings();
+            $debugMode = (isset($settings['debugMode'])) ? (bool)$settings['debugMode'] : false;
             $domain = '';
             $pageId = (int)$GLOBALS['SOBE']->id;
             if ($pageId !== null) {
                 $rootLine = BackendUtility::BEgetRootLine($pageId);
                 $domain = BackendUtility::firstDomainRecord($rootLine);
+            }
+            
+            $debugScript = '';
+            if ($debugMode === true) {
+                $debugScript = "if (window._si !== undefined) { window._si.push(['showlog','']); }";
             }
 
             $siteimproveOnDomReady = "
@@ -56,7 +63,7 @@ class PageRenderer implements SingletonInterface
                             _si.push(['domain', '" . $domain . "', data.token, function() { console.log('https://pixelant.se'); }])
                             }
                     });
-                    // if (window._si !== undefined) { window._si.push(['showlog','']); }
+                    " . $debugScript . "
                 });";
 
             $pageRenderer->addJsFile('https://cdn.siteimprove.net/cms/overlay.js');
