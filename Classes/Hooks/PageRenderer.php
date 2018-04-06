@@ -20,6 +20,7 @@ use TYPO3\CMS\Backend\Controller\PageLayoutController;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 
 /**
  * Class which adds the necessary resources for Siteimprove (https://siteimprove.com/).
@@ -35,22 +36,15 @@ class PageRenderer implements SingletonInterface
     public function addResources(array $parameters, \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer)
     {
         // Add the resources only to the 'Page' module
-        if (get_class($GLOBALS['SOBE']) === PageLayoutController::class || is_subclass_of($GLOBALS['SOBE'],
+        if (isset($GLOBALS['SOBE']) && get_class($GLOBALS['SOBE']) === PageLayoutController::class || is_subclass_of($GLOBALS['SOBE'],
                 PageLayoutController::class)) {
-            $pageId = (int)GeneralUtility::_GP('id');
+            $domain = '';
+            $pageId = (int)$GLOBALS['SOBE']->id;
             if ($pageId !== null) {
-                $siteRoot = 0;
-                $pageRootLineStructure = BackendUtility::BEgetRootLine($pageId);
-                foreach ($pageRootLineStructure as $pageRootLine) {
-                    if ((bool)$pageRootLine['is_siteroot'] === true) {
-                        $siteRoot = $pageRootLine;
-                        break;
-                    }
-                }
-                $pageInformation = BackendUtility::getRecord('pages', $pageId);
+                $rootLine = BackendUtility::BEgetRootLine($pageId);
+                $domain = BackendUtility::firstDomainRecord($rootLine);
             }
 
-            $pageRenderer->addJsFile('https://cdn.siteimprove.net/cms/overlay.js');
             $siteimproveOnDomReady = "
                 $(document).ready(function() {
                     var _si = window._si || [];
@@ -59,32 +53,14 @@ class PageRenderer implements SingletonInterface
                         })
                         .done(function(data) {
                         if (data.token) {
-                            _si.push(['domain', 'www.pixelant.se', data.token, function() { console.log('https://pixelant.se'); }])
+                            _si.push(['domain', '" . $domain . "', data.token, function() { console.log('https://pixelant.se'); }])
                             }
                     });
                     // if (window._si !== undefined) { window._si.push(['showlog','']); }
                 });";
+
+            $pageRenderer->addJsFile('https://cdn.siteimprove.net/cms/overlay.js');
             $pageRenderer->addJsInlineCode('siteimproveOnDomReady', $siteimproveOnDomReady);
         }
-    }
-
-    /**
-     * Gets the current backend user.
-     *
-     * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
-     */
-    public function getBackendUser()
-    {
-        return $GLOBALS['BE_USER'];
-    }
-
-    /**
-     * getter for language service
-     *
-     * @return \TYPO3\CMS\Lang\LanguageService
-     */
-    public function getLanguageService()
-    {
-        return $GLOBALS['LANG'];
     }
 }
