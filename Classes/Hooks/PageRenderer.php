@@ -46,7 +46,7 @@ class PageRenderer implements SingletonInterface
                 $rootLine = BackendUtility::BEgetRootLine($pageId);
                 $domain = BackendUtility::firstDomainRecord($rootLine);
             }
-            
+
             $debugScript = '';
             if ($debugMode === true) {
                 $debugScript = "if (window._si !== undefined) { window._si.push(['showlog','']); }";
@@ -60,8 +60,8 @@ class PageRenderer implements SingletonInterface
                         })
                         .done(function(data) {
                         if (data.token) {
-                            _si.push(['domain', '" . $domain . "', data.token, function() { console.log('https://pixelant.se'); }])
-                            }
+                            _si.push(['domain', '" . $domain . "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
+                        }
                     });
                     " . $debugScript . "
                 });";
