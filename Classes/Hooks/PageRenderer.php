@@ -38,7 +38,7 @@ class PageRenderer implements SingletonInterface
     {
         // Add the resources only to the 'Page' module
         if (isset($GLOBALS['SOBE']) && get_class($GLOBALS['SOBE']) === PageLayoutController::class
-            || is_subclass_of($GLOBALS['SOBE'],PageLayoutController::class)) {
+            || is_subclass_of($GLOBALS['SOBE'], PageLayoutController::class)) {
             $settings = ExtensionManagerConfigurationService::getSettings();
             $debugMode = (isset($settings['debugMode'])) ? (bool)$settings['debugMode'] : false;
             $domain = '';
@@ -70,8 +70,10 @@ class PageRenderer implements SingletonInterface
                         })
                         .done(function(data) {
                         if (data.token) {
-                            _si.push(['domain', '" . $domain . "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
-                            _si.push(['input', '" . $url . "', data.token, function() { console.log('Inputted page specific url to Siteimprove'); }])
+                            _si.push(['domain', '" . $domain .
+                                "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
+                            _si.push(['input', '" . $url .
+                                "', data.token, function() { console.log('Inputted url: " . $url . "'); }])
                         }
                     });
                     " . $debugScript . "
