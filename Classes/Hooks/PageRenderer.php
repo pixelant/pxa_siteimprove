@@ -20,6 +20,7 @@ use TYPO3\CMS\Backend\Controller\PageLayoutController;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
 
 /**
@@ -36,15 +37,24 @@ class PageRenderer implements SingletonInterface
     public function addResources(array $parameters, \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer)
     {
         // Add the resources only to the 'Page' module
-        if (isset($GLOBALS['SOBE']) && get_class($GLOBALS['SOBE']) === PageLayoutController::class || is_subclass_of($GLOBALS['SOBE'],
-                PageLayoutController::class)) {
+        if (isset($GLOBALS['SOBE']) && get_class($GLOBALS['SOBE']) === PageLayoutController::class
+            || is_subclass_of($GLOBALS['SOBE'],PageLayoutController::class)) {
             $settings = ExtensionManagerConfigurationService::getSettings();
             $debugMode = (isset($settings['debugMode'])) ? (bool)$settings['debugMode'] : false;
             $domain = '';
+            $url = '';
             $pageId = (int)$GLOBALS['SOBE']->id;
             if ($pageId !== null) {
                 $rootLine = BackendUtility::BEgetRootLine($pageId);
                 $domain = BackendUtility::firstDomainRecord($rootLine);
+
+                $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
+
+                $typoLinkConf = [
+                    'parameter' => $pageId,
+                    'forceAbsoluteUrl' => 1
+                ];
+                $url = $contentObjectRenderer->typoLink_URL($typoLinkConf) ?: '/';
             }
 
             $debugScript = '';
@@ -61,6 +71,7 @@ class PageRenderer implements SingletonInterface
                         .done(function(data) {
                         if (data.token) {
                             _si.push(['domain', '" . $domain . "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
+                            _si.push(['input', '" . $url . "', data.token, function() { console.log('Inputted page specific url to Siteimprove'); }])
                         }
                     });
                     " . $debugScript . "
