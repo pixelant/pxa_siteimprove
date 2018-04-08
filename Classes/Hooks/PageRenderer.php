@@ -1,6 +1,5 @@
 <?php
 declare(strict_types=1);
-
 namespace Pixelant\PxaSiteimprove\Hooks;
 
 /*
@@ -82,5 +81,25 @@ class PageRenderer implements SingletonInterface
             $pageRenderer->addJsFile('https://cdn.siteimprove.net/cms/overlay.js');
             $pageRenderer->addJsInlineCode('siteimproveOnDomReady', $siteimproveOnDomReady);
         }
+    }
+
+    /**
+     * Gets the current backend user
+     *
+     * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
+     */
+    public function getBackendUser()
+    {
+        return $GLOBALS['BE_USER'];
+    }
+
+    /**
+     * Getter for language service
+     *
+     * @return \TYPO3\CMS\Lang\LanguageService
+     */
+    public function getLanguageService()
+    {
+        return $GLOBALS['LANG'];
     }
 }
