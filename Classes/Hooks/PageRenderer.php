@@ -78,7 +78,7 @@ class PageRenderer implements SingletonInterface
                     " . $debugScript . "
                 });";
 
-            $pageRenderer->addJsFile('https://cdn.siteimprove.net/cms/overlay.js');
+            $pageRenderer->addJsLibrary('SiteimproveOverlay', 'https://cdn.siteimprove.net/cms/overlay.js');
             $pageRenderer->addJsInlineCode('siteimproveOnDomReady', $siteimproveOnDomReady);
         }
     }
