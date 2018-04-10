@@ -65,9 +65,10 @@ class PageRenderer implements SingletonInterface
                 $(document).ready(function() {
                     var _si = window._si || [];
                     $.ajax({
-                            url: 'https://my2.siteimprove.com/auth/token?cms=TYPO3 8'
-                        })
-                        .done(function(data) {
+                        url: 'https://my2.siteimprove.com/auth/token?cms=TYPO3 8',
+                    })
+                    .done(function(data) {
+                        console.log(data);
                         if (data.token) {
                             _si.push(['domain', '" . $domain .
                                 "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
@@ -78,7 +79,15 @@ class PageRenderer implements SingletonInterface
                     " . $debugScript . "
                 });";
 
-            $pageRenderer->addJsLibrary('SiteimproveOverlay', 'https://cdn.siteimprove.net/cms/overlay.js');
+            $pageRenderer->addJsFooterLibrary(
+                'SiteimproveOverlay',
+                'https://cdn.siteimprove.net/cms/overlay.js',
+                'text/javascript',
+                false,
+                true,
+                '',
+                true
+            );
             $pageRenderer->addJsInlineCode('siteimproveOnDomReady', $siteimproveOnDomReady);
         }
     }
