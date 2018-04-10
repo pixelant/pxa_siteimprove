@@ -68,7 +68,6 @@ class PageRenderer implements SingletonInterface
                         url: 'https://my2.siteimprove.com/auth/token?cms=TYPO3 8',
                     })
                     .done(function(data) {
-                        console.log(data);
                         if (data.token) {
                             _si.push(['domain', '" . $domain .
                                 "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
