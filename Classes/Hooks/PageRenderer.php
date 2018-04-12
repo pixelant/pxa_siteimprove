@@ -19,8 +19,14 @@ use TYPO3\CMS\Backend\Controller\PageLayoutController;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Extbase\Utility\DebuggerUtility;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
+use DmitryDulepov\Realurl\Cache\DatabaseCache;
+
+use TYPO3\CMS\Core\TimeTracker\TimeTracker;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Class which adds the necessary resources for Siteimprove (https://siteimprove.com/).
@@ -48,12 +54,35 @@ class PageRenderer implements SingletonInterface
                 $domain = BackendUtility::firstDomainRecord($rootLine);
 
                 $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-
                 $typoLinkConf = [
                     'parameter' => $pageId,
                     'forceAbsoluteUrl' => 1
                 ];
                 $url = $contentObjectRenderer->typoLink_URL($typoLinkConf) ?: '/';
+
+                // If realurl is loaded then resolve the page path (nice urls)
+                if (ExtensionManagementUtility::isLoaded('realurl')) {
+                    /** @var DatabaseCache $databaseCache */
+                    $databaseCache = GeneralUtility::makeInstance(DatabaseCache::class);
+                    $pagePath = $databaseCache->getPathFromCacheByPageId(
+                        $rootLine[1],
+                        $GLOBALS['SOBE']->current_sys_language,
+                        $pageId,
+                        []
+                    );
+
+                    // If a cached page path was found
+                    if ($pagePath !== null) {
+                        $parsedUrl = parse_url($url);
+                        $url = sprintf(
+                            '%s://%s%s/%s',
+                            $parsedUrl['scheme'],
+                            $parsedUrl['host'],
+                            ($parsedUrl['port'] == '') ? '' : ':' . $parsedUrl['port'],
+                            $pagePath->getPagePath()
+                        );
+                    }
+                }
             }
 
             $debugScript = '';
@@ -78,6 +107,7 @@ class PageRenderer implements SingletonInterface
                     " . $debugScript . "
                 });";
 
+            // Add overlay.js none concatenated
             $pageRenderer->addJsFooterLibrary(
                 'SiteimproveOverlay',
                 'https://cdn.siteimprove.net/cms/overlay.js',
