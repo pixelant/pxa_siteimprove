@@ -47,6 +47,7 @@ class PageRenderer implements SingletonInterface
             $pageId = (int)$GLOBALS['SOBE']->id;
             if ($pageId !== null) {
                 $rootLine = BackendUtility::BEgetRootLine($pageId);
+                $rootLineEntry = $rootLine[1];
                 $domain = BackendUtility::firstDomainRecord($rootLine);
 
                 $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
@@ -56,12 +57,23 @@ class PageRenderer implements SingletonInterface
                 ];
                 $url = $contentObjectRenderer->typoLink_URL($typoLinkConf) ?: '/';
 
+                // If the page is the same as the root, do not add ?id=1 to path
+                if ($rootLineEntry['uid'] === $pageId) {
+                    $url = parse_url($url);
+                    $url = sprintf(
+                        '%s://%s%s/',
+                        $url['scheme'],
+                        $url['host'],
+                        ($url['port'] == '') ? '' : ':' . $url['port']
+                    );
+                }
+
                 // If realurl is loaded then resolve the page path (nice urls)
                 if (ExtensionManagementUtility::isLoaded('realurl')) {
                     /** @var DatabaseCache $databaseCache */
                     $databaseCache = GeneralUtility::makeInstance(DatabaseCache::class);
                     $pagePath = $databaseCache->getPathFromCacheByPageId(
-                        $rootLine[1],
+                        $rootLineEntry,
                         $GLOBALS['SOBE']->current_sys_language,
                         $pageId,
                         []
