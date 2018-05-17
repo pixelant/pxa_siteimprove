@@ -57,14 +57,14 @@ class PageRenderer implements SingletonInterface
                     'forceAbsoluteUrl' => 1
                 ];
 
-                if($GLOBALS['TSFE'] === null) {
+                if ($GLOBALS['TSFE'] === null) {
                     $fakeTsfe = new \stdClass();
                     $fakeTsfe->sys_page = GeneralUtility::makeInstance(PageRepository::class);
                     $GLOBALS['TSFE'] = $fakeTsfe;
                 }
                 $url = $contentObjectRenderer->typoLink_URL($typoLinkConf) ?: '/';
 
-                if(isset($fakeTsfe)) {
+                if (isset($fakeTsfe)) {
                     unset($GLOBALS['TSFE']);
                 }
                 // If the page is the same as the root, do not add ?id=1 to path
