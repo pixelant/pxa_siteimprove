@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+
 namespace Pixelant\PxaSiteimprove\Hooks;
 
 /*
@@ -23,6 +23,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
 use DmitryDulepov\Realurl\Cache\DatabaseCache;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
  * Class which adds the necessary resources for Siteimprove (https://siteimprove.com/).
@@ -55,7 +56,15 @@ class PageRenderer implements SingletonInterface
                     'parameter' => $pageId,
                     'forceAbsoluteUrl' => 1
                 ];
+                if($GLOBALS['TSFE'] === null) {
+                    $fakeTsfe = new \stdClass();
+                    $fakeTsfe->sys_page = GeneralUtility::makeInstance(PageRepository::class);
+                    $GLOBALS['TSFE'] = $fakeTsfe;
+                }
                 $url = $contentObjectRenderer->typoLink_URL($typoLinkConf) ?: '/';
+                if(isset($fakeTsfe)) {
+                    unset($GLOBALS['TSFE']);
+                }
 
                 // If the page is the same as the root, do not add ?id=1 to path
                 if ($rootLineEntry['uid'] === $pageId) {
@@ -99,21 +108,23 @@ class PageRenderer implements SingletonInterface
             }
 
             $siteimproveOnDomReady = "
-                $(document).ready(function() {
+            var jquery = TYPO3.jQuery;
+                jquery(document).ready(function() {
                     var _si = window._si || [];
-                    $.ajax({
+                    jquery.ajax({
                         url: 'https://my2.siteimprove.com/auth/token?cms=TYPO3 8',
                     })
                     .done(function(data) {
                         if (data.token) {
                             _si.push(['domain', '" . $domain .
-                                "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
+                "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
                             _si.push(['input', '" . $url .
-                                "', data.token, function() { console.log('Inputted url: " . $url . "'); }])
+                "', data.token, function() { console.log('Inputted url: " . $url . "'); }])
                         }
                     });
                     " . $debugScript . "
                 });";
+            $pageRenderer->loadJquery();
 
             // Add overlay.js none concatenated
             $pageRenderer->addJsFooterLibrary(
@@ -125,7 +136,7 @@ class PageRenderer implements SingletonInterface
                 '',
                 true
             );
-            $pageRenderer->addJsInlineCode('siteimproveOnDomReady', $siteimproveOnDomReady);
+            $pageRenderer->addJsFooterInlineCode('siteimproveOnDomReady', $siteimproveOnDomReady);
         }
     }
 
