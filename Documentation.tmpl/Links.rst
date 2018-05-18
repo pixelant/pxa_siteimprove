@@ -15,10 +15,8 @@ Links
 	https://typo3.org/extensions/repository/view/<extension key>
 
 :Bug Tracker:
-	https://forge.typo3.org/projects/extension-<extension key>/issues
+	https://github.com/pixelant/pxa_siteimprove/issues
 
 :Git Repository:
-	https://github.com/<username>/<extension key>
+	https://github.com/pixelant/pxa_siteimprove
 
-:Contact:
-	`@<username> <https://twitter.com/your-username>`__

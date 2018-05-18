@@ -25,7 +25,7 @@ Siteimprove
 	:Description:
 
 	:Keywords:
-		comma,separated,list,of,keywords
+		siteimprove,page tracking,seo
 
 	:Copyright:
 		2018
@@ -53,11 +53,5 @@ Siteimprove
 	:titlesonly:
 
 	Introduction/Index
-	User/Index
-	Administrator/Index
 	Configuration/Index
-	Developer/Index
-	KnownProblems/Index
-	ToDoList/Index
-	ChangeLog/Index
 	Links
