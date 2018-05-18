@@ -23,6 +23,7 @@ use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
 use DmitryDulepov\Realurl\Cache\DatabaseCache;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
@@ -56,11 +57,15 @@ class PageRenderer implements SingletonInterface
                     'parameter' => $pageId,
                     'forceAbsoluteUrl' => 1
                 ];
-                if ($GLOBALS['TSFE'] === null) {
-                    $fakeTsfe = new \stdClass();
-                    $fakeTsfe->sys_page = GeneralUtility::makeInstance(PageRepository::class);
-                    $GLOBALS['TSFE'] = $fakeTsfe;
+
+                if (VersionNumberUtility::getNumericTypo3Version() > 8.7) {
+                    if ($GLOBALS['TSFE'] === null) {
+                        $fakeTsfe = new \stdClass();
+                        $fakeTsfe->sys_page = GeneralUtility::makeInstance(PageRepository::class);
+                        $GLOBALS['TSFE'] = $fakeTsfe;
+                    }
                 }
+
                 $url = $contentObjectRenderer->typoLink_URL($typoLinkConf) ?: '/';
                 if (isset($fakeTsfe)) {
                     unset($GLOBALS['TSFE']);
@@ -117,9 +122,9 @@ class PageRenderer implements SingletonInterface
                     .done(function(data) {
                         if (data.token) {
                             _si.push(['domain', '" . $domain .
-                "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
+                        "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
                             _si.push(['input', '" . $url .
-                "', data.token, function() { console.log('Inputted url: " . $url . "'); }])
+                        "', data.token, function() { console.log('Inputted url: " . $url . "'); }])
                         }
                     });
                     " . $debugScript . "
