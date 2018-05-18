@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+
 namespace Pixelant\PxaSiteimprove\Tests\Unit\Hooks;
 
 use Pixelant\PxaSiteimprove\Hooks\PageRenderer;
