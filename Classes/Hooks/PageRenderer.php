@@ -25,6 +25,7 @@ use DmitryDulepov\Realurl\Cache\DatabaseCache;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 use TYPO3\CMS\Frontend\Page\PageRepository;
+use TYPO3\CMS\Core\TypoScript\TemplateService;
 
 /**
  * Class which adds the necessary resources for Siteimprove (https://siteimprove.com/).
@@ -58,10 +59,11 @@ class PageRenderer implements SingletonInterface
                     'forceAbsoluteUrl' => 1
                 ];
 
-                if (VersionNumberUtility::getNumericTypo3Version() > 8.7) {
+                if (VersionNumberUtility::getNumericTypo3Version() >= 7.6) {
                     if ($GLOBALS['TSFE'] === null) {
                         $fakeTsfe = new \stdClass();
                         $fakeTsfe->sys_page = GeneralUtility::makeInstance(PageRepository::class);
+                        $fakeTsfe->tmpl = GeneralUtility::makeInstance(TemplateService::class);
                         $GLOBALS['TSFE'] = $fakeTsfe;
                     }
                 }
