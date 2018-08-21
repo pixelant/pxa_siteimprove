@@ -25,7 +25,7 @@ class ExtensionManagerConfigurationService
      *
      * @return array unserialized extconf settings
      */
-    public static function getSettings(): array
+    public static function getSettings()
     {
         $settings = [];
         if (isset($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['pxa_siteimprove'])) {
