@@ -16,6 +16,8 @@ namespace Pixelant\PxaSiteimprove\Hooks;
  */
 
 use TYPO3\CMS\Backend\Controller\PageLayoutController;
+use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
@@ -48,64 +50,21 @@ class PageRenderer implements SingletonInterface
             $domain = '';
             $url = '';
             $pageId = (int)$GLOBALS['SOBE']->id;
-            if ($pageId !== null) {
+            if ($pageId > 0) {
                 $rootLine = BackendUtility::BEgetRootLine($pageId);
-                $rootLineEntry = $rootLine[1];
                 $domain = BackendUtility::firstDomainRecord($rootLine);
 
-                $contentObjectRenderer = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-                $typoLinkConf = [
-                    'parameter' => $pageId,
-                    'forceAbsoluteUrl' => 1
-                ];
+                $cache = $this->getCache();
 
-                if (VersionNumberUtility::getNumericTypo3Version() >= 7.6) {
-                    if ($GLOBALS['TSFE'] === null) {
-                        $fakeTsfe = new \stdClass();
-                        $fakeTsfe->sys_page = GeneralUtility::makeInstance(PageRepository::class);
-                        $fakeTsfe->tmpl = GeneralUtility::makeInstance(TemplateService::class);
-                        $GLOBALS['TSFE'] = $fakeTsfe;
-                    }
-                }
+                $eidUrl = $this->getEidUrl($pageId, $domain);
+                $cacheIdentifier = sha1($eidUrl);
 
-                $url = $contentObjectRenderer->typoLink_URL($typoLinkConf) ?: '/';
-                if (isset($fakeTsfe)) {
-                    unset($GLOBALS['TSFE']);
-                }
+                if ($cache->has($cacheIdentifier)) {
+                    $url = $cache->get($cacheIdentifier);
+                } else {
+                    $url = trim(GeneralUtility::getUrl($eidUrl));
 
-                // If the page is the same as the root, do not add ?id=1 to path
-                if ($rootLineEntry['uid'] === $pageId) {
-                    $url = parse_url($url);
-                    $url = sprintf(
-                        '%s://%s%s/',
-                        $url['scheme'],
-                        $url['host'],
-                        ($url['port'] == '') ? '' : ':' . $url['port']
-                    );
-                }
-
-                // If realurl is loaded then resolve the page path (nice urls)
-                if (ExtensionManagementUtility::isLoaded('realurl')) {
-                    /** @var DatabaseCache $databaseCache */
-                    $databaseCache = GeneralUtility::makeInstance(DatabaseCache::class);
-                    $pagePath = $databaseCache->getPathFromCacheByPageId(
-                        $rootLineEntry,
-                        $GLOBALS['SOBE']->current_sys_language,
-                        $pageId,
-                        []
-                    );
-
-                    // If a cached page path was found
-                    if ($pagePath !== null) {
-                        $parsedUrl = parse_url($url);
-                        $url = sprintf(
-                            '%s://%s%s/%s',
-                            $parsedUrl['scheme'],
-                            $parsedUrl['host'],
-                            ($parsedUrl['port'] == '') ? '' : ':' . $parsedUrl['port'],
-                            $pagePath->getPagePath()
-                        );
-                    }
+                    $cache->set($cacheIdentifier, $url);
                 }
             }
 
@@ -124,9 +83,9 @@ class PageRenderer implements SingletonInterface
                     .done(function(data) {
                         if (data.token) {
                             _si.push(['domain', '" . $domain .
-                        "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
+                "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
                             _si.push(['input', '" . $url .
-                        "', data.token, function() { console.log('Inputted url: " . $url . "'); }])
+                "', data.token, function() { console.log('Inputted url: " . $url . "'); }])
                         }
                     });
                     " . $debugScript . "
@@ -165,5 +124,48 @@ class PageRenderer implements SingletonInterface
     public function getLanguageService()
     {
         return $GLOBALS['LANG'];
+    }
+
+    /**
+     * Get eid url to fetch FE page ID url
+     *
+     * @param $pageUid
+     * @param $domain
+     * @return string
+     */
+    protected function getEidUrl($pageUid, $domain)
+    {
+        $data = [
+            'id' => $pageUid
+        ];
+
+        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+
+        if (!empty($domain)) {
+            $port = GeneralUtility::getIndpEnv('TYPO3_PORT');
+            if (!empty($port)) {
+                $domain .= ':' . $port;
+            }
+        } else {
+            $domain = GeneralUtility::getIndpEnv('HTTP_HOST');
+        }
+
+        $eidUrl = sprintf(
+            '%s://%s/index.php?eID=pxa_siteimprove&data=%s',
+            $scheme,
+            $domain,
+            base64_encode(json_encode($data))
+        );
+
+        return $eidUrl;
+    }
+
+    /**
+     * @return  FrontendInterface
+     * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
+     */
+    protected function getCache()
+    {
+        return GeneralUtility::makeInstance(CacheManager::class)->getCache('cache_pxasiteimprove_urls');
     }
 }
