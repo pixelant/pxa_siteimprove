@@ -51,4 +51,25 @@ class PageRendererTest extends UnitTestCase
         $content = $backendPageRenderer->render();
         $this->assertGreaterThan(0, strlen($content));
     }
+
+    /**
+     * @test
+     */
+    public function generateEdiUrlWithDomain()
+    {
+        $pageRenderer = $this->getAccessibleMock(
+            PageRenderer::class,
+            ['dummy']
+        );
+
+        $domain = 'www.site.com';
+        $pageUid = 12;
+        $data = [
+            'id' => $pageUid
+        ];
+
+        $expect = 'http://www.site.com/index.php?eID=pxa_siteimprove&data=' . base64_encode(json_encode($data));
+
+        $this->assertEquals($expect, $pageRenderer->_call('getEidUrl', $pageUid, $domain));
+    }
 }
