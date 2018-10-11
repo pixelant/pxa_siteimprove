@@ -21,13 +21,7 @@ use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
-use DmitryDulepov\Realurl\Cache\DatabaseCache;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
-use TYPO3\CMS\Frontend\Page\PageRepository;
-use TYPO3\CMS\Core\TypoScript\TemplateService;
 
 /**
  * Class which adds the necessary resources for Siteimprove (https://siteimprove.com/).
@@ -64,7 +58,6 @@ class PageRenderer implements SingletonInterface
                     $url = $cache->get($cacheIdentifier);
                 } else {
                     $url = trim(GeneralUtility::getUrl($eidUrl));
-
                     $cache->set($cacheIdentifier, $url);
                 }
             }
