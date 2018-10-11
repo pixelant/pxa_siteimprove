@@ -37,6 +37,7 @@ class PageUrlEidService
      * Generate link
      *
      * @return string
+     * @throws \Exception
      */
     public function getLink()
     {
@@ -64,6 +65,7 @@ class PageUrlEidService
      * Initializes TSFE. This is necessary to have proper environment for typoLink.
      *
      * @return void
+     * @throws \Exception
      */
     protected function createTSFE()
     {

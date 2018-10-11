@@ -39,6 +39,7 @@ class PageRenderer implements SingletonInterface
      *
      * @param array $parameters An array of available parameters
      * @param \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer The parent object that triggered this hook
+     * @throws \Exception
      */
     public function addResources(array $parameters, \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer)
     {
@@ -144,7 +145,10 @@ class PageRenderer implements SingletonInterface
         if (!empty($domain)) {
             $port = GeneralUtility::getIndpEnv('TYPO3_PORT');
             if (!empty($port)) {
-                $domain .= ':' . $port;
+                // Check if the domain already contains a port if so do not add port
+                if (!preg_match('/\:\b/', $domain)) {
+                    $domain .= ':' . $port;
+                }
             }
         } else {
             $domain = GeneralUtility::getIndpEnv('HTTP_HOST');
