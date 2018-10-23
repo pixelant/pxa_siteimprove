@@ -40,34 +40,35 @@ class PageRenderer implements SingletonInterface
         // Add the resources only to the 'Page' module
         if (isset($GLOBALS['SOBE']) && get_class($GLOBALS['SOBE']) === PageLayoutController::class
             || is_subclass_of($GLOBALS['SOBE'], PageLayoutController::class)) {
-            $settings = ExtensionManagerConfigurationService::getSettings();
-            $debugMode = (isset($settings['debugMode'])) ? (bool)$settings['debugMode'] : false;
-            $domain = '';
-            $url = '';
-            $pageId = (int)$GLOBALS['SOBE']->id;
-            if ($pageId > 0) {
-                $rootLine = BackendUtility::BEgetRootLine($pageId);
-                $domain = BackendUtility::firstDomainRecord($rootLine);
+            if ((int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1 && !$GLOBALS['BE_USER']->getTSConfigVal('options . siteImprove . disable')) {
+                $settings = ExtensionManagerConfigurationService::getSettings();
+                $debugMode = (isset($settings['debugMode'])) ? (bool)$settings['debugMode'] : false;
+                $domain = '';
+                $url = '';
+                $pageId = (int)$GLOBALS['SOBE']->id;
+                if ($pageId > 0) {
+                    $rootLine = BackendUtility::BEgetRootLine($pageId);
+                    $domain = BackendUtility::firstDomainRecord($rootLine);
 
-                $cache = $this->getCache();
+                    $cache = $this->getCache();
 
-                $eidUrl = $this->getEidUrl($pageId, $domain);
-                $cacheIdentifier = sha1($eidUrl);
+                    $eidUrl = $this->getEidUrl($pageId, $domain);
+                    $cacheIdentifier = sha1($eidUrl);
 
-                if ($cache->has($cacheIdentifier)) {
-                    $url = $cache->get($cacheIdentifier);
-                } else {
-                    $url = trim(GeneralUtility::getUrl($eidUrl));
-                    $cache->set($cacheIdentifier, $url);
+                    if ($cache->has($cacheIdentifier)) {
+                        $url = $cache->get($cacheIdentifier);
+                    } else {
+                        $url = trim(GeneralUtility::getUrl($eidUrl));
+                        $cache->set($cacheIdentifier, $url);
+                    }
                 }
-            }
 
-            $debugScript = '';
-            if ($debugMode === true) {
-                $debugScript = "if (window._si !== undefined) { window._si.push(['showlog','']); }";
-            }
+                $debugScript = '';
+                if ($debugMode === true) {
+                    $debugScript = "if (window._si !== undefined) { window._si.push(['showlog','']); }";
+                }
 
-            $siteimproveOnDomReady = "
+                $siteimproveOnDomReady = "
             var jquery = TYPO3.jQuery;
                 jquery(document).ready(function() {
                     var _si = window._si || [];
@@ -77,26 +78,27 @@ class PageRenderer implements SingletonInterface
                     .done(function(data) {
                         if (data.token) {
                             _si.push(['domain', '" . $domain .
-                "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
+                    "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
                             _si.push(['input', '" . $url .
-                "', data.token, function() { console.log('Inputted url: " . $url . "'); }])
+                    "', data.token, function() { console.log('Inputted url: " . $url . "'); }])
                         }
                     });
                     " . $debugScript . "
                 });";
-            $pageRenderer->loadJquery();
+                $pageRenderer->loadJquery();
 
-            // Add overlay.js none concatenated
-            $pageRenderer->addJsFooterLibrary(
-                'SiteimproveOverlay',
-                'https://cdn.siteimprove.net/cms/overlay.js',
-                'text/javascript',
-                false,
-                true,
-                '',
-                true
-            );
-            $pageRenderer->addJsFooterInlineCode('siteimproveOnDomReady', $siteimproveOnDomReady);
+                // Add overlay.js none concatenated
+                $pageRenderer->addJsFooterLibrary(
+                    'SiteimproveOverlay',
+                    'https://cdn.siteimprove.net/cms/overlay.js',
+                    'text/javascript',
+                    false,
+                    true,
+                    '',
+                    true
+                );
+                $pageRenderer->addJsFooterInlineCode('siteimproveOnDomReady', $siteimproveOnDomReady);
+            }
         }
     }
 
