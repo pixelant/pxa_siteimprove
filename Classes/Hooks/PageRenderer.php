@@ -40,7 +40,8 @@ class PageRenderer implements SingletonInterface
         // Add the resources only to the 'Page' module
         if (isset($GLOBALS['SOBE']) && get_class($GLOBALS['SOBE']) === PageLayoutController::class
             || is_subclass_of($GLOBALS['SOBE'], PageLayoutController::class)) {
-            if ((int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1 && !$GLOBALS['BE_USER']->getTSConfigVal('options . siteImprove . disable')) {
+            // Check if the user has enabled Siteimprove in the user settings, and it is not disabled for the user group
+            if ((int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1 && !$GLOBALS['BE_USER']->getTSConfigVal('options.siteImprove.disable')) {
                 $settings = ExtensionManagerConfigurationService::getSettings();
                 $debugMode = (isset($settings['debugMode'])) ? (bool)$settings['debugMode'] : false;
                 $domain = '';
