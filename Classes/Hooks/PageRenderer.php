@@ -41,7 +41,9 @@ class PageRenderer implements SingletonInterface
         if (isset($GLOBALS['SOBE']) && get_class($GLOBALS['SOBE']) === PageLayoutController::class
             || is_subclass_of($GLOBALS['SOBE'], PageLayoutController::class)) {
             // Check if the user has enabled Siteimprove in the user settings, and it is not disabled for the user group
-            if ((int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1 && !$GLOBALS['BE_USER']->getTSConfigVal('options.siteImprove.disable')) {
+            if ((int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1
+                && !$GLOBALS['BE_USER']->getTSConfigVal('options.siteImprove.disable')
+            ) {
                 $settings = ExtensionManagerConfigurationService::getSettings();
                 $debugMode = (isset($settings['debugMode'])) ? (bool)$settings['debugMode'] : false;
                 $domain = '';
@@ -70,7 +72,7 @@ class PageRenderer implements SingletonInterface
                 }
 
                 $siteimproveOnDomReady = "
-            var jquery = TYPO3.jQuery;
+                var jquery = TYPO3.jQuery;
                 jquery(document).ready(function() {
                     var _si = window._si || [];
                     jquery.ajax({
