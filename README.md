@@ -15,3 +15,9 @@ Install the extension through composer for best process
 The following commands are available in the Extension Manager settings.
 
     debugMode - For getting debug information regarding the API connection
+
+For all kind of documentation which covers install to how to develop the extension:
+
+[Local Documentation](Documentation/Index.rst)
+
+[Online Documentation](https://docs.typo3.org/typo3cms/extensions/pxa_siteimprove/)
