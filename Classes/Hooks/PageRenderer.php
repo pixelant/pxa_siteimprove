@@ -28,6 +28,8 @@ use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
  */
 class PageRenderer implements SingletonInterface
 {
+    const DEFAULT_TOKEN = '320009a0fce84120bf32e023bf461d1a';
+
     /**
      * Wrapper function called by hook (\TYPO3\CMS\Core\Page\PageRenderer->render-preProcess)
      *
@@ -71,7 +73,7 @@ class PageRenderer implements SingletonInterface
                     $debugScript = "if (window._si !== undefined) { window._si.push(['showlog','']); }";
                 }
 
-                $token = (isset($settings['token'])) ? $settings['token'] : '320009a0fce84120bf32e023bf461d1a';
+                $token = (isset($settings['token'])) ? $settings['token'] : self::DEFAULT_TOKEN;
                 $siteimproveOnDomReady = "
                 var jquery = TYPO3.jQuery;
                 jquery(document).ready(function() {
