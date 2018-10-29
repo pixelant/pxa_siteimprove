@@ -71,21 +71,18 @@ class PageRenderer implements SingletonInterface
                     $debugScript = "if (window._si !== undefined) { window._si.push(['showlog','']); }";
                 }
 
+                $token = (isset($settings['token'])) ? $settings['token'] : '320009a0fce84120bf32e023bf461d1a';
                 $siteimproveOnDomReady = "
                 var jquery = TYPO3.jQuery;
                 jquery(document).ready(function() {
                     var _si = window._si || [];
-                    jquery.ajax({
-                        url: 'https://my2.siteimprove.com/auth/token?cms=TYPO3 8',
-                    })
-                    .done(function(data) {
-                        if (data.token) {
+                    var token = '" . $token . "'
+                    if (token) {
                             _si.push(['domain', '" . $domain .
-                    "', data.token, function() { console.log('Domain logged: " . $domain . "'); }]);
+                    "', token, function() { console.log('Domain logged: " . $domain . "'); }]);
                             _si.push(['input', '" . $url .
-                    "', data.token, function() { console.log('Inputted url: " . $url . "'); }])
-                        }
-                    });
+                    "', token, function() { console.log('Inputted url: " . $url . "'); }])
+                    }
                     " . $debugScript . "
                 });";
                 $pageRenderer->loadJquery();
