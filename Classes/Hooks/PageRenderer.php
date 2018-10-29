@@ -73,7 +73,7 @@ class PageRenderer implements SingletonInterface
                     $debugScript = "if (window._si !== undefined) { window._si.push(['showlog','']); }";
                 }
 
-                $token = (isset($settings['token'])) ? $settings['token'] : self::DEFAULT_TOKEN;
+                $token = (isset($settings['token']) && $settings['token']) ? $settings['token'] : self::DEFAULT_TOKEN;
                 $siteimproveOnDomReady = "
                 var jquery = TYPO3.jQuery;
                 jquery(document).ready(function() {
