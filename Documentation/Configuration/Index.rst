@@ -11,9 +11,16 @@
 Configuration Reference
 =======================
 
+.. _extension-manager-settings:
+
+Extension Manager settings
+--------------------------
+
 The following commands are available in the Extension Manager settings.
 
 	debugMode - For getting debug information regarding the API connection
+
+	token - The API token to use for Siteimprove. If none is provided the default kicks in
 
 .. _user-settings:
 

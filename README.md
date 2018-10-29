@@ -16,6 +16,8 @@ The following commands are available in the Extension Manager settings.
 
     debugMode - For getting debug information regarding the API connection
 
+    token - The API token to use for Siteimprove. If none is provided the default kicks in
+
 For all kind of documentation which covers install to how to develop the extension:
 
 [Local Documentation](Documentation/Index.rst)
