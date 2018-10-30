@@ -28,7 +28,7 @@ use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
  */
 class PageRenderer implements SingletonInterface
 {
-    const DEFAULT_TOKEN = '320009a0fce84120bf32e023bf461d1a';
+    const DEFAULT_TOKEN = '';
 
     /**
      * Wrapper function called by hook (\TYPO3\CMS\Core\Page\PageRenderer->render-preProcess)
