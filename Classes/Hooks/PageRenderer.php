@@ -54,52 +54,45 @@ class PageRenderer implements SingletonInterface
                 if ($pageId > 0) {
                     $rootLine = BackendUtility::BEgetRootLine($pageId);
                     $domain = BackendUtility::firstDomainRecord($rootLine);
-
-                    $cache = $this->getCache();
-
                     $eidUrl = $this->getEidUrl($pageId, $domain);
-                    $cacheIdentifier = sha1($eidUrl);
 
-                    if ($cache->has($cacheIdentifier)) {
-                        $url = $cache->get($cacheIdentifier);
-                    } else {
-                        $url = trim(GeneralUtility::getUrl($eidUrl));
-                        $cache->set($cacheIdentifier, $url);
+                    $debugScript = '';
+                    if ($debugMode === true) {
+                        $debugScript = "if (window._si !== undefined) { window._si.push(['showlog','']); }";
                     }
+
+                    $token = (isset($settings['token']) && $settings['token']) ? $settings['token'] : self::DEFAULT_TOKEN;
+                    $siteimproveOnDomReady = "
+                    var jquery = TYPO3.jQuery;
+                    jquery(document).ready(function() {
+                        var _si = window._si || [];
+                        var token = '" . $token . "';
+                        jquery.ajax({
+                            url: '" . $eidUrl . "',
+                        })
+                        .done(function(data) {
+                            if (token) {
+                                _si.push(['domain', '" . $domain .
+                            "', token, function() { console.log('Domain logged: " . $domain . "'); }]);
+                                _si.push(['input', data, token, function() { console.log('Inputted url: ' + data); }])
+                            }
+                        });
+                        " . $debugScript . "
+                    });";
+                    $pageRenderer->loadJquery();
+
+                    // Add overlay.js none concatenated
+                    $pageRenderer->addJsFooterLibrary(
+                        'SiteimproveOverlay',
+                        'https://cdn.siteimprove.net/cms/overlay.js',
+                        'text/javascript',
+                        false,
+                        true,
+                        '',
+                        true
+                    );
+                    $pageRenderer->addJsFooterInlineCode('siteimproveOnDomReady', $siteimproveOnDomReady);
                 }
-
-                $debugScript = '';
-                if ($debugMode === true) {
-                    $debugScript = "if (window._si !== undefined) { window._si.push(['showlog','']); }";
-                }
-
-                $token = (isset($settings['token']) && $settings['token']) ? $settings['token'] : self::DEFAULT_TOKEN;
-                $siteimproveOnDomReady = "
-                var jquery = TYPO3.jQuery;
-                jquery(document).ready(function() {
-                    var _si = window._si || [];
-                    var token = '" . $token . "'
-                    if (token) {
-                            _si.push(['domain', '" . $domain .
-                    "', token, function() { console.log('Domain logged: " . $domain . "'); }]);
-                            _si.push(['input', '" . $url .
-                    "', token, function() { console.log('Inputted url: " . $url . "'); }])
-                    }
-                    " . $debugScript . "
-                });";
-                $pageRenderer->loadJquery();
-
-                // Add overlay.js none concatenated
-                $pageRenderer->addJsFooterLibrary(
-                    'SiteimproveOverlay',
-                    'https://cdn.siteimprove.net/cms/overlay.js',
-                    'text/javascript',
-                    false,
-                    true,
-                    '',
-                    true
-                );
-                $pageRenderer->addJsFooterInlineCode('siteimproveOnDomReady', $siteimproveOnDomReady);
             }
         }
     }
