@@ -4,7 +4,9 @@
     "description": "",
     "authors": [
         {
-            "name": "Mattias Nilsson",
+            "name": "Pixelant",
+            "email": "info@pixelant.net",
+            "homepage": "https://www.pixelant.net",
             "role": "Developer"
         }
     ],
