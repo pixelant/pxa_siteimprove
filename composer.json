@@ -1,10 +1,12 @@
 {
     "name": "pixelant/pxa-siteimprove",
     "type": "typo3-cms-extension",
-    "description": "",
+    "description": "Official integration of the popular digital optimization intelligence platform.",
     "authors": [
         {
-            "name": "Mattias Nilsson",
+            "name": "Pixelant",
+            "email": "info@pixelant.net",
+            "homepage": "https://www.pixelant.net",
             "role": "Developer"
         }
     ],

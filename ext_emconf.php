@@ -6,10 +6,11 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Siteimprove',
-    'description' => '',
+    'description' => 'Official integration of the popular digital optimization intelligence platform.',
     'category' => 'plugin',
-    'author' => 'Mattias Nilsson',
-    'author_email' => 'mattias@pixelant.se',
+    'author' => 'Pixelant',
+    'author_email' => 'info@pixelant.net',
+    'author_company' => 'Pixelant',
     'state' => 'stable',
     'uploadfolder' => 0,
     'createDirs' => '',
