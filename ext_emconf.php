@@ -6,7 +6,7 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Siteimprove',
-    'description' => '',
+    'description' => 'Official integration of the popular digital optimization intelligence platform.',
     'category' => 'plugin',
     'author' => 'Pixelant',
     'author_email' => 'info@pixelant.net',
