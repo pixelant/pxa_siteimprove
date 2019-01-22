@@ -85,6 +85,8 @@ class PageUrlEidService
         $tsfe->getConfigArray();
 
         // Set linkVars, absRefPrefix, etc
-        PageGenerator::pagegenInit();
+        if (method_exists('PageGenerator', 'pagegenInit')) {
+            PageGenerator::pagegenInit();
+        }
     }
 }

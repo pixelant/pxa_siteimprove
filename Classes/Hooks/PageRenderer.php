@@ -64,7 +64,7 @@ class PageRenderer implements SingletonInterface
                     $token = (isset($settings['token']) && $settings['token'])
                         ? $settings['token'] : self::DEFAULT_TOKEN;
                     $siteimproveOnDomReady = "
-                    var jquery = TYPO3.jQuery;
+                    var jquery = TYPO3.jQuery || jQuery;
                     jquery(document).ready(function() {
                         var _si = window._si || [];
                         var token = '" . $token . "';
