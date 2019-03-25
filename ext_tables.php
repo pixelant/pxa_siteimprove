@@ -20,3 +20,9 @@ call_user_func(
         }
     }
 );
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+    $_EXTKEY,
+    'Configuration/TypoScript/Deeplinking',
+    'Siteimprove Deeplinking Tags'
+);

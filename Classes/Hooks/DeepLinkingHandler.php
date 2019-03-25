@@ -1,0 +1,71 @@
+<?php
+namespace Pixelant\PxaSiteimprove\Hooks;
+
+/*
+ * This file is part of the TYPO3 CMS project.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ *
+ * The TYPO3 project - inspiring people to share!
+ */
+
+use TYPO3\CMS\Backend\Controller\BackendController;
+use TYPO3\CMS\Core\Authentication\AbstractUserAuthentication;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+class DeepLinkingHandler implements \TYPO3\CMS\Core\SingletonInterface
+{
+
+    /**
+     *
+     *
+     * @param array $params
+     * @param \TYPO3\CMS\Core\Authentication\AbstractUserAuthentication $pObj
+     */
+    public function postUserLookUp(array $params, AbstractUserAuthentication $pObj)
+    {
+        if ($pObj->user !== null && $_REQUEST['tx_siteimprove_goto']) {
+            $pObj->setAndSaveSessionData('tx_siteimprove_goto', $_REQUEST['tx_siteimprove_goto']);
+        }
+
+    }
+
+    public function openPage(array $conf, BackendController $pObj)
+    {
+        /**
+         * @var \TYPO3\CMS\Core\Session\Backend\SessionBackendInterface $GLOBALS[BE_USER]
+         */
+        $goToSpecification = $GLOBALS['BE_USER']->getSessionData('tx_siteimprove_goto');
+        $GLOBALS['BE_USER']->setAndSaveSessionData('tx_siteimprove_goto', null);
+
+        if ($goToSpecification !== null && strpos($goToSpecification, ':') !== false) {
+            list($type, $identifier) = explode(':', $goToSpecification);
+
+            if (mb_strlen($type) > 0 && (int) $identifier > 0) {
+
+                switch ($type) {
+                    case 'page':
+                        $this->pageTypeHandler((int) $identifier);
+                        break;
+                }
+
+            }
+        }
+
+    }
+
+
+    protected function pageTypeHandler($pageId) {
+        /**
+         * @var \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer
+         */
+        $pageRenderer = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
+
+        $pageRenderer->addExtOnReadyCode('jump("", "web_layout", "web", ' . (int) $pageId . ');');
+    }
+}
