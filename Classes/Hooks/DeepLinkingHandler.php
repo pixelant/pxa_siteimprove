@@ -44,13 +44,13 @@ class DeepLinkingHandler implements \TYPO3\CMS\Core\SingletonInterface
         $GLOBALS['BE_USER']->setAndSaveSessionData('tx_siteimprove_goto', null);
 
         if ($goToSpecification !== null && strpos($goToSpecification, ':') !== false) {
-            list($type, $identifier) = explode(':', $goToSpecification);
+            list($type, $argument) = explode(':', $goToSpecification, 2);
 
-            if (mb_strlen($type) > 0 && (int) $identifier > 0) {
+            if (mb_strlen($type) > 0 && mb_strlen($argument) > 0) {
 
                 switch ($type) {
                     case 'page':
-                        $this->pageTypeHandler((int) $identifier);
+                        $this->pageTypeHandler($argument);
                         break;
                 }
 
@@ -60,12 +60,9 @@ class DeepLinkingHandler implements \TYPO3\CMS\Core\SingletonInterface
     }
 
 
-    protected function pageTypeHandler($pageId) {
-        /**
-         * @var \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer
-         */
-        $pageRenderer = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
+    protected function pageTypeHandler($argument) {
+        list($pageId, $languageId) = explode(':', $argument);
 
-        $pageRenderer->addExtOnReadyCode('jump("", "web_layout", "web", ' . (int) $pageId . ');');
+        $GLOBALS['BE_USER']->uc['startModuleOnFirstLogin'] = 'web_layout->id=' . (int) $pageId . '&SET[language]=' . (int) $languageId;
     }
 }
