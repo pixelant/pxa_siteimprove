@@ -22,20 +22,28 @@ class DeepLinkingHandler implements \TYPO3\CMS\Core\SingletonInterface
 {
 
     /**
-     *
+     * Store GoTo data in the user's session for use when the backend is rendered
      *
      * @param array $params
      * @param \TYPO3\CMS\Core\Authentication\AbstractUserAuthentication $pObj
      */
-    public function postUserLookUp(array $params, AbstractUserAuthentication $pObj)
+    public function storeGoToRequestInUserSession(array $params, AbstractUserAuthentication $pObj)
     {
         if ($pObj->user !== null && $_REQUEST['tx_siteimprove_goto']) {
             $pObj->setAndSaveSessionData('tx_siteimprove_goto', $_REQUEST['tx_siteimprove_goto']);
         }
-
     }
 
-    public function openPage(array $conf, BackendController $pObj)
+    /**
+     * Check the GoTo request and effectuate if it can be handled
+     *
+     * GoTo request format is "<type>:<argument[s]>".
+     * "page:12:2" will open the Page (web_layout) module on page 12, language 2.
+     *
+     * @param array $conf
+     * @param \TYPO3\CMS\Backend\Controller\BackendController $pObj
+     */
+    public function effectuateGoToRequest(array $conf, BackendController $pObj)
     {
         /**
          * @var \TYPO3\CMS\Core\Session\Backend\SessionBackendInterface $GLOBALS[BE_USER]
@@ -59,7 +67,11 @@ class DeepLinkingHandler implements \TYPO3\CMS\Core\SingletonInterface
 
     }
 
-
+    /**
+     * The handler for GoTo requests of the type "GoTo"
+     *
+     * @param $argument
+     */
     protected function pageTypeHandler($argument) {
         list($pageId, $languageId) = explode(':', $argument);
 
