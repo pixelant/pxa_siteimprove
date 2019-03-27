@@ -16,7 +16,6 @@ namespace Pixelant\PxaSiteimprove\Hooks;
 
 use TYPO3\CMS\Backend\Controller\BackendController;
 use TYPO3\CMS\Core\Authentication\AbstractUserAuthentication;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class DeepLinkingHandler implements \TYPO3\CMS\Core\SingletonInterface
 {
@@ -55,16 +54,13 @@ class DeepLinkingHandler implements \TYPO3\CMS\Core\SingletonInterface
             list($type, $argument) = explode(':', $goToSpecification, 2);
 
             if (mb_strlen($type) > 0 && mb_strlen($argument) > 0) {
-
                 switch ($type) {
                     case 'page':
                         $this->pageTypeHandler($argument);
                         break;
                 }
-
             }
         }
-
     }
 
     /**
@@ -72,9 +68,10 @@ class DeepLinkingHandler implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param $argument
      */
-    protected function pageTypeHandler($argument) {
+    protected function pageTypeHandler($argument)
+    {
         list($pageId, $languageId) = explode(':', $argument);
 
-        $GLOBALS['BE_USER']->uc['startModuleOnFirstLogin'] = 'web_layout->id=' . (int) $pageId . '&SET[language]=' . (int) $languageId;
+        $GLOBALS['BE_USER']->uc['startModuleOnFirstLogin'] = 'web_layout->id=' . (int)$pageId . '&SET[language]=' . (int)$languageId;
     }
 }
