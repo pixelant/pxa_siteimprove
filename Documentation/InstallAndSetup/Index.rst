@@ -19,6 +19,6 @@ Include the TypoScript Template for Deeplinking Support
    .. image:: _assets/includeDeeplinkingTypoScriptTemplate.png
       :class: with-shadow
 
-In order to enable the Edit in CMS deeplinking button, you must include the static template "Siteimprove Deeplinking Tags" in your site's root template. This will include a couple of new meta tags in your page header allowing Siteimprove to generate the button link.
+In order to enable the *Edit in CMS* deeplinking button, you must include the static template "Siteimprove Deeplinking Tags" in your site's root template. This will include a couple of new meta tags in your page header allowing Siteimprove to generate the button link.
 
 (Remember to clear the cache afterwards.)

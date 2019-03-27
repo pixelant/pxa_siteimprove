@@ -25,4 +25,4 @@ Page Module for site and page analysis.
 Deeplinking Support
 -------------------
 
-The Siteimprove Intelligence Platform supports CMS Deeplinking. Clicking on an Edit in CMS button within the Siteimprove platform will take you to the corresponding page within TYPO3's Page Module.
+The *Siteimprove Intelligence Platform* supports CMS Deeplinking. Clicking on an *Edit in CMS* button within the Siteimprove platform will take you to the corresponding page within TYPO3's Page Module.
