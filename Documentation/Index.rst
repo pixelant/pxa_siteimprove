@@ -53,5 +53,6 @@ Siteimprove
 	:titlesonly:
 
 	Introduction/Index
+	InstallAndSetup/Index
 	Configuration/Index
 	Links
