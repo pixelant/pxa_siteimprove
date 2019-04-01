@@ -21,8 +21,10 @@ call_user_func(
     }
 );
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-    $_EXTKEY,
-    'Configuration/TypoScript/Deeplinking',
-    'Siteimprove Deeplinking Tags'
-);
+if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 8000000) {
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+        $_EXTKEY,
+        'Configuration/TypoScript/Deeplinking',
+        'Siteimprove Deeplinking Tags'
+    );
+}
