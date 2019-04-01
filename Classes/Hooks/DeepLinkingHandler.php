@@ -28,7 +28,7 @@ class DeepLinkingHandler implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function storeGoToRequestInUserSession(array $params, AbstractUserAuthentication $pObj)
     {
-        if ($pObj->user !== null && $_REQUEST['tx_siteimprove_goto']) {
+        if ($GLOBALS['BE_USER'] !== null && $_REQUEST['tx_siteimprove_goto']) {
             $pObj->setAndSaveSessionData('tx_siteimprove_goto', $_REQUEST['tx_siteimprove_goto']);
         }
     }
