@@ -28,13 +28,13 @@ Siteimprove
 		siteimprove,page tracking,seo
 
 	:Copyright:
-		2018
+		2019
 
 	:Author:
-		Mattias Nilsson
+		Pixelant
 
 	:Email:
-		mattias@pixelant.se
+		info@pixelant.net
 
 	:License:
 		This document is published under the Open Content License
@@ -53,5 +53,6 @@ Siteimprove
 	:titlesonly:
 
 	Introduction/Index
+	InstallAndSetup/Index
 	Configuration/Index
 	Links

@@ -15,3 +15,10 @@ if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][
         'groups' => ['all']
     ];
 }
+
+if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 8000000) {
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_userauth.php']['postUserLookUp'][] =
+        \Pixelant\PxaSiteimprove\Hooks\DeepLinkingHandler::class . '->storeGoToRequestInUserSession';
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/backend.php']['constructPostProcess'][]
+        = \Pixelant\PxaSiteimprove\Hooks\DeepLinkingHandler::class . '->effectuateGoToRequest';
+}

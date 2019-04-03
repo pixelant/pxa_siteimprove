@@ -10,3 +10,5 @@ composer.lock
 /vendor
 
 code-coverage/
+
+.php_cs.cache
