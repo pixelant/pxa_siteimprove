@@ -72,6 +72,7 @@ class DeepLinkingHandler implements \TYPO3\CMS\Core\SingletonInterface
     {
         list($pageId, $languageId) = explode(':', $argument);
 
-        $GLOBALS['BE_USER']->uc['startModuleOnFirstLogin'] = 'web_layout->id=' . (int)$pageId . '&SET[language]=' . (int)$languageId;
+        $GLOBALS['BE_USER']->uc['startModuleOnFirstLogin'] =
+            'web_layout->id=' . (int)$pageId . '&SET[language]=' . (int)$languageId;
     }
 }
