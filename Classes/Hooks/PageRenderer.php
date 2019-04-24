@@ -131,7 +131,19 @@ class PageRenderer implements SingletonInterface
             'id' => $pageUid
         ];
 
-        $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        //Define scheme
+        $reverseProxyIP = explode (',' , $GLOBALS['TYPO3_CONF_VARS']['SYS']['reverseProxyIP']);
+        $reverseProxySSL = explode (',' , $GLOBALS['TYPO3_CONF_VARS']['SYS']['reverseProxySSL']);
+        $ipOfProxyOrClient = $_SERVER['REMOTE_ADDR'];
+
+        if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+            (in_array($ipOfProxyOrClient, $reverseProxyIP) &&
+                (in_array($ipOfProxyOrClient, $reverseProxySSL) || $reverseProxySSL[0] === '*'))){
+
+            $scheme = 'https';
+        } else {
+            $scheme = 'http';
+        }
 
         if (!empty($domain)) {
             $port = GeneralUtility::getIndpEnv('TYPO3_PORT');
