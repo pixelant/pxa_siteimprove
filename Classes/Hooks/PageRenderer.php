@@ -74,7 +74,7 @@ class PageRenderer implements SingletonInterface
                         .done(function(data) {
                             if (token) {
                                 _si.push(['domain', '" . $domain .
-                            "', token, function() { console.log('Domain logged: " . $domain . "'); }]);
+                        "', token, function() { console.log('Domain logged: " . $domain . "'); }]);
                                 _si.push(['input', data, token, function() { console.log('Inputted url: ' + data); }])
                             }
                         });
@@ -132,14 +132,13 @@ class PageRenderer implements SingletonInterface
         ];
 
         //Define scheme
-        $reverseProxyIP = explode (',' , $GLOBALS['TYPO3_CONF_VARS']['SYS']['reverseProxyIP']);
-        $reverseProxySSL = explode (',' , $GLOBALS['TYPO3_CONF_VARS']['SYS']['reverseProxySSL']);
+        $reverseProxyIP = explode(',', $GLOBALS['TYPO3_CONF_VARS']['SYS']['reverseProxyIP']);
+        $reverseProxySSL = explode(',', $GLOBALS['TYPO3_CONF_VARS']['SYS']['reverseProxySSL']);
         $ipOfProxyOrClient = $_SERVER['REMOTE_ADDR'];
 
-        if((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+        if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
             (in_array($ipOfProxyOrClient, $reverseProxyIP) &&
-                (in_array($ipOfProxyOrClient, $reverseProxySSL) || $reverseProxySSL[0] === '*'))){
-
+                (in_array($ipOfProxyOrClient, $reverseProxySSL) || $reverseProxySSL[0] === '*'))) {
             $scheme = 'https';
         } else {
             $scheme = 'http';
