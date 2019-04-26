@@ -137,7 +137,7 @@ class PageRenderer implements SingletonInterface
         $ipOfProxyOrClient = $_SERVER['REMOTE_ADDR'];
 
         if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
-            (in_array($ipOfProxyOrClient, $reverseProxyIP) &&
+            (in_array($ipOfProxyOrClient, $reverseProxyIP) && isset($ipOfProxyOrClient) &&
                 (in_array($ipOfProxyOrClient, $reverseProxySSL) || $reverseProxySSL[0] === '*'))) {
             $scheme = 'https';
         } else {
