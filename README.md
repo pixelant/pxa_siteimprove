@@ -18,6 +18,19 @@ The following commands are available in the Extension Manager settings.
 
     token - The API token to use for Siteimprove. If none is provided the default kicks in
 
+## Deep Linking
+
+A deep link to a page is of the following form:
+
+    https://example.com/typo3/index.php?tx_siteimprove_goto=page:{page_uid}:{language_uid}
+    
+Whereas the `language_uid` is optional and defaults to `0`. Example links could look like this:
+
+    https://example.com/typo3/index.php?tx_siteimprove_goto=page:42
+    https://example.com/typo3/index.php?tx_siteimprove_goto=page:42:1
+
+## Documentation
+
 For all kind of documentation which covers install to how to develop the extension:
 
 [Local Documentation](Documentation/Index.rst)
