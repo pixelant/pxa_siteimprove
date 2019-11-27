@@ -52,8 +52,14 @@ class PageRenderer implements SingletonInterface
                 $url = '';
                 $pageId = (int)$GLOBALS['SOBE']->id;
                 if ($pageId > 0) {
-                    $rootLine = BackendUtility::BEgetRootLine($pageId);
-                    $domain = BackendUtility::firstDomainRecord($rootLine);
+                    if (version_compare(TYPO3_branch, '9.5', '<')) {
+                        $rootLine = BackendUtility::BEgetRootLine($pageId);
+                        $domain = BackendUtility::firstDomainRecord($rootLine);
+                    } else {
+                        $siteFinder = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Site\SiteFinder::class);
+                        $site = $siteFinder->getSiteByPageId($pageId);
+                        $domain = $site->getBase()->getHost();
+                    }
                     $eidUrl = $this->getEidUrl($pageId, $domain);
 
                     $debugScript = '';
