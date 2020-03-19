@@ -44,7 +44,7 @@ class PageRenderer implements SingletonInterface
             || is_subclass_of($GLOBALS['SOBE'], PageLayoutController::class)) {
             // Check if the user has enabled Siteimprove in the user settings, and it is not disabled for the user group
             if ((int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1
-                && !$GLOBALS['BE_USER']->getTSConfigVal('options.siteImprove.disable')
+                && !$GLOBALS['BE_USER']->getTSConfig()['options.']['siteImprove.']['disable']
             ) {
                 $settings = ExtensionManagerConfigurationService::getSettings();
                 $debugMode = (isset($settings['debugMode'])) ? (bool)$settings['debugMode'] : false;
