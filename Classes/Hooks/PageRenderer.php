@@ -28,6 +28,7 @@ use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
  */
 class PageRenderer implements SingletonInterface
 {
+    // @codingStandardsIgnoreLine
     const DEFAULT_TOKEN = '';
 
     /**
@@ -65,7 +66,8 @@ class PageRenderer implements SingletonInterface
                         $debugScript = "if (window._si !== undefined) { window._si.push(['showlog','']); }";
                     }
 
-                    $token = (isset($settings['token']) && $settings['token']) ? $settings['token'] : self::DEFAULT_TOKEN;
+                    $token
+                        = (isset($settings['token']) && $settings['token']) ? $settings['token'] : self::DEFAULT_TOKEN;
 
                     $siteimproveOnDomReady = "
                     require(['jquery'], function($) {
@@ -82,7 +84,9 @@ class PageRenderer implements SingletonInterface
                                 if (token) {
                                     _si.push(['domain', '" . $domain .
                             "', token, function() { console.log('Domain logged: " . $domain . "'); }]);
-                                    _si.push(['input', data.pageUrl, token, function() { console.log('Inputted url: ' + data.pageUrl); }])
+                                    _si.push(['input', data.pageUrl, token, function() {
+                                        console.log('Inputted url: ' + data.pageUrl);
+                                    }])
                                 }
                             });
                             " . $debugScript . '
