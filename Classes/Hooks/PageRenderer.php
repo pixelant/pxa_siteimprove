@@ -64,24 +64,25 @@ class PageRenderer implements SingletonInterface
 
                     $token = (isset($settings['token']) && $settings['token'])
                         ? $settings['token'] : self::DEFAULT_TOKEN;
+
                     $siteimproveOnDomReady = "
-                    var jquery = TYPO3.jQuery || jQuery;
-                    jquery(document).ready(function() {
-                        var _si = window._si || [];
-                        var token = '" . $token . "';
-                        jquery.ajax({
-                            url: '" . $eidUrl . "',
-                        })
-                        .done(function(data) {
-                            if (token) {
-                                _si.push(['domain', '" . $domain .
-                        "', token, function() { console.log('Domain logged: " . $domain . "'); }]);
-                                _si.push(['input', data, token, function() { console.log('Inputted url: ' + data); }])
-                            }
+                    require(['jquery'], function($) {
+                        jQuery(document).ready(function() {
+                            var _si = window._si || [];
+                            var token = '" . $token . "';
+                            jQuery.ajax({
+                                url: '" . $eidUrl . "',
+                            })
+                            .done(function(data) {
+                                if (token) {
+                                    _si.push(['domain', '" . $domain .
+                            "', token, function() { console.log('Domain logged: " . $domain . "'); }]);
+                                    _si.push(['input', data, token, function() { console.log('Inputted url: ' + data); }])
+                                }
+                            });
+                            " . $debugScript . "
                         });
-                        " . $debugScript . "
                     });";
-                    $pageRenderer->loadJquery();
 
                     // Add overlay.js none concatenated
                     $pageRenderer->addJsFooterLibrary(
