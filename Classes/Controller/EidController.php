@@ -25,6 +25,8 @@ class EidController
     protected $request;
 
     /**
+     * Main request handler
+     *
      * @param ServerRequestInterface $request
      * @param ResponseInterface $response
      * @return ResponseInterface
