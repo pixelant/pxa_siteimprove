@@ -28,11 +28,11 @@ class AjaxBackendController
         $pageId = (int)$request->getQueryParams()['id'];
 
         if (!$pageId) {
-            $this->responseArray['pageLink'] = '';
+            $this->responseArray['pageUrl'] = '';
             return $this->prepareJsonResponse();
         }
 
-        $this->responseArray['pageLink'] = CompatibilityUtility::getPageUrl($pageId);
+        $this->responseArray['pageUrl'] = CompatibilityUtility::getPageUrl($pageId);
 
         return $this->prepareJsonResponse();
     }

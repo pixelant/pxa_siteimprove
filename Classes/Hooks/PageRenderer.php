@@ -73,14 +73,14 @@ class PageRenderer implements SingletonInterface
                             jQuery.ajax({
                                 url: TYPO3.settings.ajaxUrls['pixelant_siteimprove_getpagelink'],
                                 data: {
-                                    id: " . $pageId . "
+                                    id: " . (int)$pageId . "
                                 }
                             })
                             .done(function(data) {
                                 if (token) {
                                     _si.push(['domain', '" . $domain .
                             "', token, function() { console.log('Domain logged: " . $domain . "'); }]);
-                                    _si.push(['input', data, token, function() { console.log('Inputted url: ' + data); }])
+                                    _si.push(['input', data.pageUrl, token, function() { console.log('Inputted url: ' + data.pageUrl); }])
                                 }
                             });
                             " . $debugScript . "
