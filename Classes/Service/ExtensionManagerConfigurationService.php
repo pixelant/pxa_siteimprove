@@ -32,9 +32,11 @@ class ExtensionManagerConfigurationService
     public static function getSettings()
     {
         $settings = [];
-        if (VersionNumberUtility::convertVersionNumberToInteger(
+        if (
+            VersionNumberUtility::convertVersionNumberToInteger(
                 VersionNumberUtility::getNumericTypo3Version()
-            ) < 9000000) {
+            ) < 9000000
+        ) {
             // @extensionScannerIgnoreLine
             $settingsString = $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['pxa_siteimprove'];
             if (isset($settingsString)) {

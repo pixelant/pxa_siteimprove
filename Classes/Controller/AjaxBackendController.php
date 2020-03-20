@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pixelant\PxaSiteimprove\Controller;
-
 
 use Pixelant\PxaSiteimprove\Utility\CompatibilityUtility;
 use Psr\Http\Message\ResponseInterface;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pixelant\PxaSiteimprove\Utility;
-
 
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Core\Environment;
@@ -150,7 +148,7 @@ class CompatibilityUtility
      * @param int $version
      * @return bool
      */
-    public static function typo3VersionIsGreaterThan(i$version)
+    public static function typo3VersionIsGreaterThan(i $version)
     {
         return self::getTypo3VersionInteger() > $version;
     }

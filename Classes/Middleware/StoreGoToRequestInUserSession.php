@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pixelant\PxaSiteimprove\Middleware;
-
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -35,5 +33,4 @@ class StoreGoToRequestInUserSession implements MiddlewareInterface
     {
         return $GLOBALS['BE_USER'];
     }
-
 }

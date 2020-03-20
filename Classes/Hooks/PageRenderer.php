@@ -40,10 +40,13 @@ class PageRenderer implements SingletonInterface
     public function addResources(array $parameters, \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer)
     {
         // Add the resources only to the 'Page' module
-        if (isset($GLOBALS['SOBE']) && get_class($GLOBALS['SOBE']) === PageLayoutController::class
-            || is_subclass_of($GLOBALS['SOBE'], PageLayoutController::class)) {
+        if (
+            isset($GLOBALS['SOBE']) && get_class($GLOBALS['SOBE']) === PageLayoutController::class
+            || is_subclass_of($GLOBALS['SOBE'], PageLayoutController::class)
+        ) {
             // Check if the user has enabled Siteimprove in the user settings, and it is not disabled for the user group
-            if ((int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1
+            if (
+                (int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1
                 && !$GLOBALS['BE_USER']->getTSConfig()['options.']['siteImprove.']['disable']
             ) {
                 $settings = ExtensionManagerConfigurationService::getSettings();
@@ -62,8 +65,7 @@ class PageRenderer implements SingletonInterface
                         $debugScript = "if (window._si !== undefined) { window._si.push(['showlog','']); }";
                     }
 
-                    $token = (isset($settings['token']) && $settings['token'])
-                        ? $settings['token'] : self::DEFAULT_TOKEN;
+                    $token = (isset($settings['token']) && $settings['token']) ? $settings['token'] : self::DEFAULT_TOKEN;
 
                     $siteimproveOnDomReady = "
                     require(['jquery'], function($) {
@@ -83,9 +85,9 @@ class PageRenderer implements SingletonInterface
                                     _si.push(['input', data.pageUrl, token, function() { console.log('Inputted url: ' + data.pageUrl); }])
                                 }
                             });
-                            " . $debugScript . "
+                            " . $debugScript . '
                         });
-                    });";
+                    });';
 
                     // Add overlay.js none concatenated
                     $pageRenderer->addJsFooterLibrary(
@@ -137,9 +139,11 @@ class PageRenderer implements SingletonInterface
         $reverseProxySSL = explode(',', $GLOBALS['TYPO3_CONF_VARS']['SYS']['reverseProxySSL']);
         $ipOfProxyOrClient = $_SERVER['REMOTE_ADDR'];
 
-        if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+        if (
+            (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
             (in_array($ipOfProxyOrClient, $reverseProxyIP) && isset($ipOfProxyOrClient) &&
-                (in_array($ipOfProxyOrClient, $reverseProxySSL) || $reverseProxySSL[0] === '*'))) {
+                (in_array($ipOfProxyOrClient, $reverseProxySSL) || $reverseProxySSL[0] === '*'))
+        ) {
             $scheme = 'https';
         } else {
             $scheme = 'http';
