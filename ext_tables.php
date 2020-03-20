@@ -25,7 +25,7 @@ call_user_func(
     }
 );
 
-if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(\TYPO3\CMS\Core\Utility\VersionNumberUtility::getNumericTypo3Version()) >= 8000000) {
+if (\Pixelant\PxaSiteimprove\Utility\CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(8000000)) {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
         $_EXTKEY,
         'Configuration/TypoScript/Deeplinking',
@@ -33,17 +33,7 @@ if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(
     );
 }
 
-if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(\TYPO3\CMS\Core\Utility\VersionNumberUtility::getNumericTypo3Version()) >= 8000000
-    && \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(\TYPO3\CMS\Core\Utility\VersionNumberUtility::getNumericTypo3Version()) < 10002000
-    // @extensionScannerIgnoreLine
-    && \TYPO3\CMS\Core\Utility\GeneralUtility::getApplicationContext()->isDevelopment()) {
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-        $_EXTKEY,
-        'Configuration/TypoScript/DeeplinkingDevelopment',
-        'Siteimprove Deeplinking Development Tag'
-    );
-} elseif(\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(\TYPO3\CMS\Core\Utility\VersionNumberUtility::getNumericTypo3Version()) >= 10002000
-    && TYPO3\CMS\Core\Core\Environment::getContext()->isDevelopment()) {
+if (\Pixelant\PxaSiteimprove\Utility\CompatibilityUtility::getApplicationContext()->isDevelopment()) {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
         $_EXTKEY,
         'Configuration/TypoScript/DeeplinkingDevelopment',

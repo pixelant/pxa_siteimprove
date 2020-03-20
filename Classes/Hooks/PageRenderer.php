@@ -15,12 +15,12 @@ namespace Pixelant\PxaSiteimprove\Hooks;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Pixelant\PxaSiteimprove\Utility\CompatibilityUtility;
 use TYPO3\CMS\Backend\Controller\PageLayoutController;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
 use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
 
 /**
@@ -51,9 +51,10 @@ class PageRenderer implements SingletonInterface
                 $domain = '';
                 $url = '';
                 $pageId = (int)$GLOBALS['SOBE']->id;
+
                 if ($pageId > 0) {
-                    $rootLine = BackendUtility::BEgetRootLine($pageId);
-                    $domain = BackendUtility::firstDomainRecord($rootLine);
+                    $domain = CompatibilityUtility::getFirstDomainInRootline($pageId);
+
                     $eidUrl = $this->getEidUrl($pageId, $domain);
 
                     $debugScript = '';
