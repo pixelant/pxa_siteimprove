@@ -128,10 +128,6 @@ class PageRenderer implements SingletonInterface
      */
     protected function getEidUrl($pageUid, $domain)
     {
-        $data = [
-            'id' => $pageUid
-        ];
-
         //Define scheme
         $reverseProxyIP = explode(',', $GLOBALS['TYPO3_CONF_VARS']['SYS']['reverseProxyIP']);
         $reverseProxySSL = explode(',', $GLOBALS['TYPO3_CONF_VARS']['SYS']['reverseProxySSL']);
@@ -158,10 +154,10 @@ class PageRenderer implements SingletonInterface
         }
 
         $eidUrl = sprintf(
-            '%s://%s/index.php?eID=pxa_siteimprove&data=%s',
+            '%s://%s/index.php?eID=pxa_siteimprove&id=%s',
             $scheme,
             $domain,
-            base64_encode(json_encode($data))
+            (int) $pageUid
         );
 
         return $eidUrl;
