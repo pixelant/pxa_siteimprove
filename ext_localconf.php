@@ -1,9 +1,6 @@
 <?php
 defined('TYPO3_MODE') || die('Access denied.');
 
-// Register EID
-$GLOBALS['TYPO3_CONF_VARS']['FE']['eID_include'][$_EXTKEY] = \Pixelant\PxaSiteimprove\Controller\EidController::class . '::processRequest';
-
 // @codingStandardsIgnoreStart
 if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_pxasiteimprove_urls']['frontend'])) {// @codingStandardsIgnoreEnd
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_pxasiteimprove_urls'] = [

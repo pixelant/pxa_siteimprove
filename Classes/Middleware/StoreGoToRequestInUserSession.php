@@ -23,7 +23,7 @@ class StoreGoToRequestInUserSession implements MiddlewareInterface
             $this->getBackendUser()->setAndSaveSessionData('tx_siteimprove_goto', $_REQUEST['tx_siteimprove_goto']);
         }
 
-        $handler->handle($request);
+        return $handler->handle($request);
     }
 
     /**
