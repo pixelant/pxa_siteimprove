@@ -24,19 +24,3 @@ call_user_func(
         }
     }
 );
-
-if (\Pixelant\PxaSiteimprove\Utility\CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(8000000)) {
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-        $_EXTKEY,
-        'Configuration/TypoScript/Deeplinking',
-        'Siteimprove Deeplinking Tags'
-    );
-}
-
-if (\Pixelant\PxaSiteimprove\Utility\CompatibilityUtility::getApplicationContext()->isDevelopment()) {
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-        $_EXTKEY,
-        'Configuration/TypoScript/DeeplinkingDevelopment',
-        'Siteimprove Deeplinking Development Tag'
-    );
-}
