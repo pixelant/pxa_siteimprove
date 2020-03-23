@@ -37,15 +37,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Echo test
-        env:
-          EXCLUDE_PATTERN: ${{ matrix.exclude-pattern }}
-        run: echo $EXCLUDE_PATTERN
-
       - name: Run PHP lint
         env:
           EXCLUDE_PATTERN: ${{ matrix.exclude-pattern }}
-        run: EXCLUDE_PATTERN='${{ matrix.exclude-pattern }}'; composer ci:php:lint
+        run: find *.php Classes/ Configuration/ Tests/ -name '*.php' $EXCLUDE_PATTERN -print0 | xargs -0 -n 1 -P 4 php -l
 
   typoscript-lint:
     name: TypoScript linter
