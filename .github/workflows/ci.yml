@@ -138,6 +138,11 @@ jobs:
             php-version: 7.1
 
     steps:
+      - name: Configure PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+
       - name: Checkout
         uses: actions/checkout@v1
 
