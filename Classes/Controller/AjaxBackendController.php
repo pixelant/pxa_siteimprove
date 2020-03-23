@@ -5,6 +5,7 @@ namespace Pixelant\PxaSiteimprove\Controller;
 use Pixelant\PxaSiteimprove\Utility\CompatibilityUtility;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Http\JsonResponse;
 use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -36,10 +37,14 @@ class AjaxBackendController
     }
 
     /**
-     * @return Response
+     * @return ResponseInterface
      */
     protected function prepareJsonResponse()
     {
+        if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
+            return GeneralUtility::makeInstance(JsonResponse::class, $this->responseArray);
+        }
+
         $response = GeneralUtility::makeInstance(Response::class);
 
         $response = $response->withHeader('Content-Type', 'application/json; charset=utf-8');
