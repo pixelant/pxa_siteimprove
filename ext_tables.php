@@ -1,6 +1,10 @@
 <?php
 defined('TYPO3_MODE') || die('Access denied.');
 
+if (!isset($_EXTKEY)) {
+    $_EXTKEY = 'pxa_siteimprove';
+}
+
 // Add BE User setting
 $GLOBALS['TYPO3_USER_SETTINGS']['columns']['use_siteimprove'] = [
     'label' => 'LLL:EXT:pxa_siteimprove/Resources/Private/Language/locallang.xlf:settings.field.use_siteimprove',
@@ -20,20 +24,3 @@ call_user_func(
         }
     }
 );
-
-if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 8000000) {
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-        $_EXTKEY,
-        'Configuration/TypoScript/Deeplinking',
-        'Siteimprove Deeplinking Tags'
-    );
-}
-
-if (\TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger(TYPO3_version) >= 8000000 &&
-    \TYPO3\CMS\Core\Utility\GeneralUtility::getApplicationContext()->isDevelopment()) {
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-        $_EXTKEY,
-        'Configuration/TypoScript/DeeplinkingDevelopment',
-        'Siteimprove Deeplinking Development Tag'
-    );
-}

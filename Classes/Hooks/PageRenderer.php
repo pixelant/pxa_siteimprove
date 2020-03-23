@@ -15,12 +15,12 @@ namespace Pixelant\PxaSiteimprove\Hooks;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Pixelant\PxaSiteimprove\Utility\CompatibilityUtility;
 use TYPO3\CMS\Backend\Controller\PageLayoutController;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Backend\Utility\BackendUtility;
 use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
 
 /**
@@ -28,6 +28,7 @@ use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
  */
 class PageRenderer implements SingletonInterface
 {
+    // @codingStandardsIgnoreLine
     const DEFAULT_TOKEN = '';
 
     /**
@@ -40,20 +41,25 @@ class PageRenderer implements SingletonInterface
     public function addResources(array $parameters, \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer)
     {
         // Add the resources only to the 'Page' module
-        if (isset($GLOBALS['SOBE']) && get_class($GLOBALS['SOBE']) === PageLayoutController::class
-            || is_subclass_of($GLOBALS['SOBE'], PageLayoutController::class)) {
+        if (
+            isset($GLOBALS['SOBE'])
+            && ($GLOBALS['SOBE'] instanceof PageLayoutController || $GLOBALS['SOBE'] instanceof PageLayoutController)
+        ) {
             // Check if the user has enabled Siteimprove in the user settings, and it is not disabled for the user group
-            if ((int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1
-                && !$GLOBALS['BE_USER']->getTSConfigVal('options.siteImprove.disable')
+            if (
+                (int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1
+                && (!isset($GLOBALS['BE_USER']->getTSConfig()['options.']['siteImprove.']['disable'])
+                || !$GLOBALS['BE_USER']->getTSConfig()['options.']['siteImprove.']['disable'])
             ) {
                 $settings = ExtensionManagerConfigurationService::getSettings();
                 $debugMode = (isset($settings['debugMode'])) ? (bool)$settings['debugMode'] : false;
                 $domain = '';
                 $url = '';
                 $pageId = (int)$GLOBALS['SOBE']->id;
+
                 if ($pageId > 0) {
-                    $rootLine = BackendUtility::BEgetRootLine($pageId);
-                    $domain = BackendUtility::firstDomainRecord($rootLine);
+                    $domain = CompatibilityUtility::getFirstDomainInRootline($pageId);
+
                     $eidUrl = $this->getEidUrl($pageId, $domain);
 
                     $debugScript = '';
@@ -61,26 +67,32 @@ class PageRenderer implements SingletonInterface
                         $debugScript = "if (window._si !== undefined) { window._si.push(['showlog','']); }";
                     }
 
-                    $token = (isset($settings['token']) && $settings['token'])
-                        ? $settings['token'] : self::DEFAULT_TOKEN;
+                    $token
+                        = (isset($settings['token']) && $settings['token']) ? $settings['token'] : self::DEFAULT_TOKEN;
+
                     $siteimproveOnDomReady = "
-                    var jquery = TYPO3.jQuery || jQuery;
-                    jquery(document).ready(function() {
-                        var _si = window._si || [];
-                        var token = '" . $token . "';
-                        jquery.ajax({
-                            url: '" . $eidUrl . "',
-                        })
-                        .done(function(data) {
-                            if (token) {
-                                _si.push(['domain', '" . $domain .
-                        "', token, function() { console.log('Domain logged: " . $domain . "'); }]);
-                                _si.push(['input', data, token, function() { console.log('Inputted url: ' + data); }])
-                            }
+                    require(['jquery'], function($) {
+                        jQuery(document).ready(function() {
+                            var _si = window._si || [];
+                            var token = '" . $token . "';
+                            jQuery.ajax({
+                                url: TYPO3.settings.ajaxUrls['pixelant_siteimprove_getpagelink'],
+                                data: {
+                                    id: " . (int)$pageId . "
+                                }
+                            })
+                            .done(function(data) {
+                                if (token) {
+                                    _si.push(['domain', '" . $domain .
+                            "', token, function() { console.log('Domain logged: " . $domain . "'); }]);
+                                    _si.push(['input', data.pageUrl, token, function() {
+                                        console.log('Inputted url: ' + data.pageUrl);
+                                    }])
+                                }
+                            });
+                            " . $debugScript . '
                         });
-                        " . $debugScript . "
-                    });";
-                    $pageRenderer->loadJquery();
+                    });';
 
                     // Add overlay.js none concatenated
                     $pageRenderer->addJsFooterLibrary(
@@ -127,18 +139,16 @@ class PageRenderer implements SingletonInterface
      */
     protected function getEidUrl($pageUid, $domain)
     {
-        $data = [
-            'id' => $pageUid
-        ];
-
         //Define scheme
         $reverseProxyIP = explode(',', $GLOBALS['TYPO3_CONF_VARS']['SYS']['reverseProxyIP']);
         $reverseProxySSL = explode(',', $GLOBALS['TYPO3_CONF_VARS']['SYS']['reverseProxySSL']);
         $ipOfProxyOrClient = $_SERVER['REMOTE_ADDR'];
 
-        if ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+        if (
+            (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
             (in_array($ipOfProxyOrClient, $reverseProxyIP) && isset($ipOfProxyOrClient) &&
-                (in_array($ipOfProxyOrClient, $reverseProxySSL) || $reverseProxySSL[0] === '*'))) {
+                (in_array($ipOfProxyOrClient, $reverseProxySSL) || $reverseProxySSL[0] === '*'))
+        ) {
             $scheme = 'https';
         } else {
             $scheme = 'http';
@@ -157,10 +167,10 @@ class PageRenderer implements SingletonInterface
         }
 
         $eidUrl = sprintf(
-            '%s://%s/index.php?eID=pxa_siteimprove&data=%s',
+            '%s://%s/index.php?eID=pxa_siteimprove&id=%s',
             $scheme,
             $domain,
-            base64_encode(json_encode($data))
+            (int) $pageUid
         );
 
         return $eidUrl;

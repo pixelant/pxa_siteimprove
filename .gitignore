@@ -7,8 +7,15 @@
 # Composer
 /.Build/*
 composer.lock
-/vendor
+
+# TYPO3 9
+/var
+
+# Coding style
+/.php_cs.cache
 
 code-coverage/
 
-.php_cs.cache
+# Documentation
+/Documentation-GENERATED-temp
+/tempfile.sh
