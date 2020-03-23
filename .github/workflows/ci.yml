@@ -157,7 +157,7 @@ jobs:
         env:
           TYPO3: ${{ matrix.typo3-version }}
         run: |
-          composer require typo3/minimal:"$TYPO3"
+          composer require typo3/minimal:"${{ matrix.typo3-version }}"
           composer show
       - name: Install lowest dependencies with composer
         if: matrix.composer-dependencies == 'lowest'
