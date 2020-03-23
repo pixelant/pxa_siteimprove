@@ -42,8 +42,8 @@ class PageRenderer implements SingletonInterface
     {
         // Add the resources only to the 'Page' module
         if (
-            isset($GLOBALS['SOBE']) && get_class($GLOBALS['SOBE']) === PageLayoutController::class
-            || is_subclass_of($GLOBALS['SOBE'], PageLayoutController::class)
+            isset($GLOBALS['SOBE'])
+            && ($GLOBALS['SOBE'] instanceof PageLayoutController || $GLOBALS['SOBE'] instanceof PageLayoutController)
         ) {
             // Check if the user has enabled Siteimprove in the user settings, and it is not disabled for the user group
             if (
