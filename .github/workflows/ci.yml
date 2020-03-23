@@ -1,12 +1,11 @@
 on:
   pull_request:
     branches:
-      - '*'
-      - '!master'
+      - 'master'
   push:
     branches:
       - '*'
-      - 'master'
+      - '!master'
 
 name: CI
 
