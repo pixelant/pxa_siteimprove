@@ -22,6 +22,11 @@ jobs:
           - 7.2
           - 7.3
           - 7.4
+        include:
+          - php-version: 5.5
+            exclude-pattern: -not -path "./Classes/Middleware/*"
+          - php-version: 5.6
+            exclude-pattern: -not -path "./Classes/Middleware/*"
 
     steps:
       - name: Configure PHP ${{ matrix.php-version }}
@@ -33,6 +38,8 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Run PHP lint
+        env:
+          EXCLUDE_PATTERN: ${{ matrix.exclude-pattern }}
         run: composer ci:php:lint
 
   typoscript-lint:
