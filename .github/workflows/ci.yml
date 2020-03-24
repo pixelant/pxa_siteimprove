@@ -24,9 +24,9 @@ jobs:
           - 7.4
         include:
           - php-version: 5.5
-            exclude-pattern: Classes/Middleware/*
+            exclude-pattern: -not -path Classes/Middleware/* -prune
           - php-version: 5.6
-            exclude-pattern: Classes/Middleware/*
+            exclude-pattern: -not -path Classes/Middleware/* -prune
 
     steps:
       - name: Configure PHP ${{ matrix.php-version }}
@@ -40,8 +40,8 @@ jobs:
       - name: Run PHP lint
         run: |
           echo "${{ matrix.exclude-pattern }}"
-          find *.php Classes/ Configuration/ Tests/ -name '*.php' -not -path ${{ matrix.exclude-pattern }} -prune
-          find *.php Classes/ Configuration/ Tests/ -name '*.php' -not -path ${{ matrix.exclude-pattern }} -prune -print0 | xargs -0 -n 1 -P 4 php -l
+          find *.php Classes/ Configuration/ Tests/ -name '*.php' ${{ matrix.exclude-pattern }}
+          find *.php Classes/ Configuration/ Tests/ -name '*.php' ${{ matrix.exclude-pattern }} -print0 | xargs -0 -n 1 -P 4 php -l
 
   typoscript-lint:
     name: TypoScript linter
