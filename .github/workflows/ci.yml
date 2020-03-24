@@ -40,7 +40,10 @@ jobs:
       - name: Run PHP lint
         env:
           EXCLUDE_PATTERN: ${{ matrix.exclude-pattern }}
-        run: find *.php Classes/ Configuration/ Tests/ -name '*.php' -not -path $EXCLUDE_PATTERN -prune -print0 | xargs -0 -n 1 -P 4 php -l
+        run: |
+          echo $EXCLUDE_PATTERN
+          find *.php Classes/ Configuration/ Tests/ -name '*.php' -not -path $EXCLUDE_PATTERN -prune
+          find *.php Classes/ Configuration/ Tests/ -name '*.php' -not -path $EXCLUDE_PATTERN -prune -print0 | xargs -0 -n 1 -P 4 php -l
 
   typoscript-lint:
     name: TypoScript linter
