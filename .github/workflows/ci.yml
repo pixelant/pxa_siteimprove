@@ -22,7 +22,6 @@ jobs:
           - 7.2
           - 7.3
           - 7.4
-        exclude-pattern: ['']
         include:
           - php-version: 5.5
             exclude-pattern: Classes//Middleware/*
@@ -39,12 +38,10 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Run PHP lint
-        env:
-          EXCLUDE_PATTERN: ${{ matrix.exclude-pattern }}
         run: |
-          echo $EXCLUDE_PATTERN
-          find *.php Classes/ Configuration/ Tests/ -name '*.php' -not -path $EXCLUDE_PATTERN -prune
-          find *.php Classes/ Configuration/ Tests/ -name '*.php' -not -path $EXCLUDE_PATTERN -prune -print0 | xargs -0 -n 1 -P 4 php -l
+          echo "${{ matrix.exclude-pattern }}"
+          find *.php Classes/ Configuration/ Tests/ -name '*.php' -not -path ${{ matrix.exclude-pattern }} -prune
+          find *.php Classes/ Configuration/ Tests/ -name '*.php' -not -path ${{ matrix.exclude-pattern }} -prune -print0 | xargs -0 -n 1 -P 4 php -l
 
   typoscript-lint:
     name: TypoScript linter
