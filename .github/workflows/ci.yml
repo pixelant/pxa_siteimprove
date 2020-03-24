@@ -22,7 +22,7 @@ jobs:
           - 7.2
           - 7.3
           - 7.4
-        exclude-pattern: ''
+        exclude-pattern: ['']
         include:
           - php-version: 5.5
             exclude-pattern: Classes//Middleware/*
