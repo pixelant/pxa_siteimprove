@@ -182,15 +182,5 @@ jobs:
         run: |
           composer update --no-ansi --no-interaction --no-progress --no-suggest
           composer show
-      - name: Set up TYPO3
-        env:
-          TYPO3_INSTALL_DB_USER: root
-          TYPO3_INSTALL_DB_PASSWORD: root
-          TYPO3_INSTALL_DB_HOST: localhost
-          TYPO3_INSTALL_DB_DBNAME: db
-          TYPO3_INSTALL_ADMIN_USER: admin
-          TYPO3_INSTALL_ADMIN_PASSWORD: admin1234
-          TYPO3_INSTALL_SITE_NAME: Github
-        run: composer exec typo3cms install:setup --no-interaction
       - name: Run unit tests
-        run: composer ci:tests:unit
+        run: composer ci:tests
