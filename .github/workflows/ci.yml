@@ -197,4 +197,4 @@ jobs:
       - name: Set configuration
         run: ln -s Tests/Fixtures/LocalConfiguration.php .Build/public/typo3conf/LocalConfiguration.php
       - name: Run unit tests
-        run: composer ci:tests
+        run: composer ci:tests:functional
