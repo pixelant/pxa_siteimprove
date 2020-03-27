@@ -201,7 +201,5 @@ jobs:
         run: |
           composer update --no-ansi --no-interaction --no-progress --no-suggest
           composer show
-      - name: Set configuration
-        run: ln -s Tests/Fixtures/LocalConfiguration.php .Build/public/typo3conf/LocalConfiguration.php
       - name: Run unit tests
         run: composer ci:tests:functional

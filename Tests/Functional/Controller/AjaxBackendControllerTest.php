@@ -18,19 +18,6 @@ class AjaxBackendControllerTest extends FunctionalTestCase
 
     protected function setUp()
     {
-        $this->configurationToUseInTestInstance['DB'] = [
-            'Connections' => [
-                'Default' => [
-                    'dbname'   => 'db',
-                    'host'     => 'localhost',
-                    'password' => 'root',
-                    'user'     => 'root',
-                    'port'     => '3306',
-                ]
-            ]
-        ];
-
-
         parent::setUp();
 
         $this->importDataSet('PACKAGE:nimut/testing-framework/res/Fixtures/Database/pages.xml');
