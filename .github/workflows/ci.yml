@@ -150,11 +150,23 @@ jobs:
 #          - typo3-version: "^10.3"
 #            php-version: 7.1
 
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: false
+          MYSQL_DATABASE: typo3
+          MYSQL_ROOT_PASSWORD: password
+        ports:
+          - 3306
+
     steps:
       - name: Configure PHP ${{ matrix.php-version }}
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
+          extensions: fileinfo, filter, gd, hash, intl, json, mbstring, mysqli, openssl, pcre, session, SPL, xml, zip, zlib
+          coverage: none
 
       - name: Checkout
         uses: actions/checkout@v1
