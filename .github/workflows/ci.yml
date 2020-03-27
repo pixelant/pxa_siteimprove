@@ -7,7 +7,7 @@ on:
 name: CI
 
 env:
-  TYPO3_PATH_ROOT: ./.Build/public
+  TYPO3_PATH_ROOT: /home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/public
   typo3DatabaseHost: localhost
   typo3DatabaseName: typo3
   typo3DatabaseUsername: root
