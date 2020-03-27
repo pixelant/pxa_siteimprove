@@ -191,6 +191,6 @@ jobs:
           TYPO3_INSTALL_ADMIN_USER: admin
           TYPO3_INSTALL_ADMIN_PASSWORD: admin1234
           TYPO3_INSTALL_SITE_NAME: Github
-        run: typo3cms install:setup --no-interaction
+        run: composer exec typo3cms install:setup --no-interaction
       - name: Run unit tests
         run: composer ci:tests:unit
