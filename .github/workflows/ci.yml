@@ -7,97 +7,97 @@ on:
 name: CI
 
 jobs:
-  php-lint:
-    name: PHP linter
-
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        php-version:
-          - 5.5
-          - 5.6
-          - 7.0
-          - 7.1
-          - 7.2
-          - 7.3
-          - 7.4
-        include:
-          - php-version: 5.5
-            exclude-pattern: -not -path Classes/Middleware/* -prune
-          - php-version: 5.6
-            exclude-pattern: -not -path Classes/Middleware/* -prune
-
-    steps:
-      - name: Configure PHP ${{ matrix.php-version }}
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php-version }}
-
-      - name: Checkout
-        uses: actions/checkout@v1
-
-      - name: Run PHP lint
-        run: |
-          echo "${{ matrix.exclude-pattern }}"
-          find *.php Classes/ Configuration/ Tests/ -name '*.php' ${{ matrix.exclude-pattern }}
-          find *.php Classes/ Configuration/ Tests/ -name '*.php' ${{ matrix.exclude-pattern }} -print0 | xargs -0 -n 1 -P 4 php -l
-
-  typoscript-lint:
-    name: TypoScript linter
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-
-      - name: "Cache dependencies installed with composer"
-        uses: actions/cache@v1
-        with:
-          path: ~/.composer/cache
-          key: php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: |
-            php${{ matrix.php-version }}-composer-
-      - name: Install Composer dependencies
-        run: composer install --no-progress
-
-      - name: Run TypoScript lint
-        run: composer ci:ts:lint
-
-  php-code-sniffer:
-    name: PHP Code Sniffer
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-
-      - name: "Cache dependencies installed with composer"
-        uses: actions/cache@v1
-        with:
-          path: ~/.composer/cache
-          key: php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: |
-            php${{ matrix.php-version }}-composer-
-      - name: Install Composer dependencies
-        run: composer install --no-progress
-
-      - name: Run PHP Code Sniffer
-        run: composer ci:php:sniff
-
-  docs-generate:
-    name: Docs Generate & Check
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-
-      - name: Generate documentation
-        run: OUTPUT=`composer docs:generate`; echo "{$OUTPUT}"; echo -n "{$OUTPUT}" | grep "There are no Sphinx warnings"
+#  php-lint:
+#    name: PHP linter
+#
+#    runs-on: ubuntu-latest
+#
+#    strategy:
+#      matrix:
+#        php-version:
+#          - 5.5
+#          - 5.6
+#          - 7.0
+#          - 7.1
+#          - 7.2
+#          - 7.3
+#          - 7.4
+#        include:
+#          - php-version: 5.5
+#            exclude-pattern: -not -path Classes/Middleware/* -prune
+#          - php-version: 5.6
+#            exclude-pattern: -not -path Classes/Middleware/* -prune
+#
+#    steps:
+#      - name: Configure PHP ${{ matrix.php-version }}
+#        uses: shivammathur/setup-php@v2
+#        with:
+#          php-version: ${{ matrix.php-version }}
+#
+#      - name: Checkout
+#        uses: actions/checkout@v1
+#
+#      - name: Run PHP lint
+#        run: |
+#          echo "${{ matrix.exclude-pattern }}"
+#          find *.php Classes/ Configuration/ Tests/ -name '*.php' ${{ matrix.exclude-pattern }}
+#          find *.php Classes/ Configuration/ Tests/ -name '*.php' ${{ matrix.exclude-pattern }} -print0 | xargs -0 -n 1 -P 4 php -l
+#
+#  typoscript-lint:
+#    name: TypoScript linter
+#
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v1
+#
+#      - name: "Cache dependencies installed with composer"
+#        uses: actions/cache@v1
+#        with:
+#          path: ~/.composer/cache
+#          key: php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
+#          restore-keys: |
+#            php${{ matrix.php-version }}-composer-
+#      - name: Install Composer dependencies
+#        run: composer install --no-progress
+#
+#      - name: Run TypoScript lint
+#        run: composer ci:ts:lint
+#
+#  php-code-sniffer:
+#    name: PHP Code Sniffer
+#
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v1
+#
+#      - name: "Cache dependencies installed with composer"
+#        uses: actions/cache@v1
+#        with:
+#          path: ~/.composer/cache
+#          key: php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
+#          restore-keys: |
+#            php${{ matrix.php-version }}-composer-
+#      - name: Install Composer dependencies
+#        run: composer install --no-progress
+#
+#      - name: Run PHP Code Sniffer
+#        run: composer ci:php:sniff
+#
+#  docs-generate:
+#    name: Docs Generate & Check
+#
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v1
+#
+#      - name: Generate documentation
+#        run: OUTPUT=`composer docs:generate`; echo "{$OUTPUT}"; echo -n "{$OUTPUT}" | grep "There are no Sphinx warnings"
 
   unit-tests:
     name: Unit tests
@@ -107,48 +107,48 @@ jobs:
     strategy:
       matrix:
         typo3-version:
-          - "^7.6"
-          - "^8.7"
-          - "^9.5"
+#          - "^7.6"
+#          - "^8.7"
+#          - "^9.5"
           - "^10.3"
         composer-dependencies:
           - highest
-          - lowest
+#          - lowest
         php-version:
-          - 5.5
-          - 5.6
-          - 7.0
-          - 7.1
-          - 7.2
-          - 7.3
+#          - 5.5
+#          - 5.6
+#          - 7.0
+#          - 7.1
+#          - 7.2
+#          - 7.3
           - 7.4
-        exclude:
-          - typo3-version: "^7.6"
-            php-version: 7.2
-          - typo3-version: "^7.6"
-            php-version: 7.3
-          - typo3-version: "^7.6"
-            php-version: 7.4
-          - typo3-version: "^8.7"
-            php-version: 5.5
-          - typo3-version: "^8.7"
-            php-version: 5.6
-          - typo3-version: "^9.5"
-            php-version: 5.5
-          - typo3-version: "^9.5"
-            php-version: 5.6
-          - typo3-version: "^9.5"
-            php-version: 7.0
-          - typo3-version: "^9.5"
-            php-version: 7.1
-          - typo3-version: "^10.3"
-            php-version: 5.5
-          - typo3-version: "^10.3"
-            php-version: 5.6
-          - typo3-version: "^10.3"
-            php-version: 7.0
-          - typo3-version: "^10.3"
-            php-version: 7.1
+#        exclude:
+#          - typo3-version: "^7.6"
+#            php-version: 7.2
+#          - typo3-version: "^7.6"
+#            php-version: 7.3
+#          - typo3-version: "^7.6"
+#            php-version: 7.4
+#          - typo3-version: "^8.7"
+#            php-version: 5.5
+#          - typo3-version: "^8.7"
+#            php-version: 5.6
+#          - typo3-version: "^9.5"
+#            php-version: 5.5
+#          - typo3-version: "^9.5"
+#            php-version: 5.6
+#          - typo3-version: "^9.5"
+#            php-version: 7.0
+#          - typo3-version: "^9.5"
+#            php-version: 7.1
+#          - typo3-version: "^10.3"
+#            php-version: 5.5
+#          - typo3-version: "^10.3"
+#            php-version: 5.6
+#          - typo3-version: "^10.3"
+#            php-version: 7.0
+#          - typo3-version: "^10.3"
+#            php-version: 7.1
 
     steps:
       - name: Configure PHP ${{ matrix.php-version }}
