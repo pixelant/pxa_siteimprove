@@ -25,10 +25,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
         $this->importDataSet('/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/Database/pages.xml');
 
         $this->setUpBackendUserFromFixture(1);
-        $this->setUpFrontendRootPage(
-            1,
-            ['/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts']
-        );
+        $this->setUpFrontendRootPage(1);
         Bootstrap::initializeLanguageObject();
 
         $this->subject = new AjaxBackendController();
@@ -39,8 +36,9 @@ class AjaxBackendControllerTest extends FunctionalTestCase
      */
     public function getPageLinkActionReturnsCorrectUrl()
     {
-        $request = (new ServerRequest())->withQueryParams(['id' => 1]);
-
+        $request = (new ServerRequest())
+            ->withUri('http://www.example.com/')
+            ->withQueryParams(['id' => 2]);
         $response = $this->subject->getPageLinkAction($request);
         $body = (string)$response->getBody();
         $jsonArray = json_decode($body, true);
