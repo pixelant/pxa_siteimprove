@@ -8,6 +8,8 @@ use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use Pixelant\PxaSiteimprove\Controller\AjaxBackendController;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Core\Bootstrap;
+use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AjaxBackendControllerTest extends FunctionalTestCase
 {
