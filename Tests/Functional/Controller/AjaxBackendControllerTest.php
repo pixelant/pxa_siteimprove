@@ -21,7 +21,6 @@ class AjaxBackendControllerTest extends FunctionalTestCase
         parent::setUp();
 
         $this->importDataSet('/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/Database/pages.xml');
-        $this->importDataSet('/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/Database/sys_language.xml');
 
         $this->setUpBackendUserFromFixture(1);
         $this->setUpFrontendRootPage(
@@ -40,7 +39,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
     public function getPageLinkActionReturnsCorrectUrl()
     {
         $request = new ServerRequest();
-        $request->withQueryParams(['id' => 1]);
+        $request->withQueryParams(['id' => 2]);
 
         $response = $this->subject->getPageLinkAction($request);
         $body = (string)$response->getBody();
