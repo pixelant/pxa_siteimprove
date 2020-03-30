@@ -32,6 +32,7 @@ class CompatibilityUtility
 
             try {
                 $site = $siteFinder->getSiteByPageId($pageId);
+                var_dump($site, $site->getRouter());
                 $pageLink = (string) $site->getRouter()->generateUri($pageId);
             } catch (SiteNotFoundException $siteNotFoundException) {
                 $pageLink = '';
