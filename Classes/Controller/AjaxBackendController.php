@@ -25,7 +25,7 @@ class AjaxBackendController
     public function getPageLinkAction(ServerRequestInterface $request)
     {
         $pageId = (int)$request->getQueryParams()['id'];
-var_dump($pageId);
+
         if (!$pageId) {
             $this->responseArray['pageUrl'] = '';
             return $this->prepareJsonResponse();
