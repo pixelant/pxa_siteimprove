@@ -39,7 +39,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
      */
     public function getPageLinkActionReturnsCorrectUrl()
     {
-        $request = (new ServerRequest())->withQueryParams(['id' => 2]);
+        $request = (new ServerRequest())->withQueryParams(['id' => 1]);
 
         $response = $this->subject->getPageLinkAction($request);
         $body = (string)$response->getBody();
