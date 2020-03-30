@@ -29,10 +29,9 @@ class CompatibilityUtility
         if (self::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
             /** @var SiteFinder $siteFinder */
             $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
-var_dump($siteFinder);
+
             try {
                 $site = $siteFinder->getSiteByPageId($pageId);
-                var_dump($site);
                 $pageLink = (string) $site->getRouter()->generateUri($pageId);
             } catch (SiteNotFoundException $siteNotFoundException) {
                 $pageLink = '';

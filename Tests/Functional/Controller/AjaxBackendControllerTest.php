@@ -40,7 +40,9 @@ class AjaxBackendControllerTest extends FunctionalTestCase
     {
         $request = new ServerRequest();
         $request->withQueryParams(['id' => 2]);
-
+        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
+        $site = $siteFinder->getSiteByPageId(2);
+var_dump($site);
         $response = $this->subject->getPageLinkAction($request);
         $body = (string)$response->getBody();
         $jsonArray = json_decode($body, true);
