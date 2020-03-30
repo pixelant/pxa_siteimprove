@@ -27,8 +27,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
         $this->setUpBackendUserFromFixture(1);
         $this->setUpFrontendRootPage(
             1,
-            ['/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts'],
-            ['/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/Sites/Frontend/site.yaml']
+            ['/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts']
         );
         Bootstrap::initializeLanguageObject();
 
