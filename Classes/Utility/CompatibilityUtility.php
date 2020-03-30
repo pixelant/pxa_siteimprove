@@ -26,10 +26,11 @@ class CompatibilityUtility
      */
     public static function getPageUrl($pageId)
     {
+        var_dump(1);
         if (self::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
             /** @var SiteFinder $siteFinder */
             $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
-
+            var_dump(2);
             try {
                 $site = $siteFinder->getSiteByPageId($pageId);
                 var_dump($site, $site->getRouter());
@@ -42,7 +43,7 @@ class CompatibilityUtility
                 return $pageLink;
             }
         }
-
+        var_dump(3);
         $tsfeWasSet = $GLOBALS['TSFE'] !== null;
 
         if (!$tsfeWasSet) {
