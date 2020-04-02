@@ -32,7 +32,6 @@
         }
     },
     "replace": {
-        "pxa_siteimprove": "self.version",
         "typo3-ter/pxa-siteimprove": "self.version"
     },
     "config": {
