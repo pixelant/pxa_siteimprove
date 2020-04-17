@@ -53,12 +53,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
     {
         $request = (new ServerRequest())->withQueryParams(['id' => 2]);
         $response = $this->subject->getPageLinkAction($request);
-        try {
-            $body = (string)$response->getBody();
-        } catch (Exception $e) {
-            var_dump($e);
-            die();
-        }
+        $body = (string)$response->getBody();
 
         if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(10000000)) {
             $this->assertEquals(
