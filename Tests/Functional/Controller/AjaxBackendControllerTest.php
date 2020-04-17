@@ -11,6 +11,7 @@ use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Http\Uri;
 use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AjaxBackendControllerTest extends FunctionalTestCase
@@ -37,6 +38,10 @@ class AjaxBackendControllerTest extends FunctionalTestCase
                 1,
                 ['/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts']
             );
+
+            /** @var TemplateService $templateService */
+            $templateService = GeneralUtility::makeInstance(TemplateService::class);
+            $templateService->start([1]);
         }
 
         $this->setUpBackendUserFromFixture(1);
