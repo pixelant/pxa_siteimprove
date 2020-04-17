@@ -44,8 +44,6 @@ class AjaxBackendControllerTest extends FunctionalTestCase
 
         $this->setUpBackendUserFromFixture(1);
 
-        Bootstrap::initializeLanguageObject();
-
         $this->subject = new AjaxBackendController();
     }
 
