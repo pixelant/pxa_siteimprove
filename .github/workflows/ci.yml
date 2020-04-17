@@ -107,48 +107,48 @@ jobs:
     strategy:
       matrix:
         typo3-version:
-#          - "^7.6"
-#          - "^8.7"
-#          - "^9.5"
+          - "^7.6"
+          - "^8.7"
+          - "^9.5"
           - "^10.3"
         composer-dependencies:
           - highest
 #          - lowest
         php-version:
-#          - 5.5
-#          - 5.6
-#          - 7.0
-#          - 7.1
-#          - 7.2
-#          - 7.3
+          - 5.5
+          - 5.6
+          - 7.0
+          - 7.1
+          - 7.2
+          - 7.3
           - 7.4
-#        exclude:
-#          - typo3-version: "^7.6"
-#            php-version: 7.2
-#          - typo3-version: "^7.6"
-#            php-version: 7.3
-#          - typo3-version: "^7.6"
-#            php-version: 7.4
-#          - typo3-version: "^8.7"
-#            php-version: 5.5
-#          - typo3-version: "^8.7"
-#            php-version: 5.6
-#          - typo3-version: "^9.5"
-#            php-version: 5.5
-#          - typo3-version: "^9.5"
-#            php-version: 5.6
-#          - typo3-version: "^9.5"
-#            php-version: 7.0
-#          - typo3-version: "^9.5"
-#            php-version: 7.1
-#          - typo3-version: "^10.3"
-#            php-version: 5.5
-#          - typo3-version: "^10.3"
-#            php-version: 5.6
-#          - typo3-version: "^10.3"
-#            php-version: 7.0
-#          - typo3-version: "^10.3"
-#            php-version: 7.1
+        exclude:
+          - typo3-version: "^7.6"
+            php-version: 7.2
+          - typo3-version: "^7.6"
+            php-version: 7.3
+          - typo3-version: "^7.6"
+            php-version: 7.4
+          - typo3-version: "^8.7"
+            php-version: 5.5
+          - typo3-version: "^8.7"
+            php-version: 5.6
+          - typo3-version: "^9.5"
+            php-version: 5.5
+          - typo3-version: "^9.5"
+            php-version: 5.6
+          - typo3-version: "^9.5"
+            php-version: 7.0
+          - typo3-version: "^9.5"
+            php-version: 7.1
+          - typo3-version: "^10.3"
+            php-version: 5.5
+          - typo3-version: "^10.3"
+            php-version: 5.6
+          - typo3-version: "^10.3"
+            php-version: 7.0
+          - typo3-version: "^10.3"
+            php-version: 7.1
 
     services:
       mysql:
