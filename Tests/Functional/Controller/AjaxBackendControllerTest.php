@@ -38,10 +38,6 @@ class AjaxBackendControllerTest extends FunctionalTestCase
                 1,
                 ['/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts']
             );
-
-            /** @var TemplateService $templateService */
-            $templateService = GeneralUtility::makeInstance(TemplateService::class);
-            $templateService->runThroughTemplates([1]);
         }
 
         $this->setUpBackendUserFromFixture(1);
