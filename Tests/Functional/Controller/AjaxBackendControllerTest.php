@@ -6,6 +6,7 @@ namespace Pixelant\PxaSiteimprove\Tests\Functional\Controller;
 
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use Pixelant\PxaSiteimprove\Controller\AjaxBackendController;
+use Pixelant\PxaSiteimprove\Utility\CompatibilityUtility;
 use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Http\Uri;
@@ -23,7 +24,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        if (self::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
+        if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
             $this->importDataSet('/home/runner/work/pxa_siteimprove/pxa_siteimprove/Tests/Fixtures/Database/pages.xml');
         } else {
             $this->importDataSet('/home/runner/work/pxa_siteimprove/pxa_siteimprove/Tests/Fixtures/Database/pages-legacy.xml');
