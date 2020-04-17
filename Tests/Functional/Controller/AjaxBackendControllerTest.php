@@ -41,7 +41,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
 
             /** @var TemplateService $templateService */
             $templateService = GeneralUtility::makeInstance(TemplateService::class);
-            $templateService->start([1]);
+            $templateService->runThroughTemplates([1]);
         }
 
         $this->setUpBackendUserFromFixture(1);
