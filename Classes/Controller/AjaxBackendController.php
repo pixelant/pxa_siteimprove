@@ -41,9 +41,9 @@ class AjaxBackendController
      */
     protected function prepareJsonResponse()
     {
-        if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
+        /*if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
             return GeneralUtility::makeInstance(JsonResponse::class, $this->responseArray);
-        }
+        }*/
 
         /** @var Response $response */
         $response = GeneralUtility::makeInstance(Response::class);
