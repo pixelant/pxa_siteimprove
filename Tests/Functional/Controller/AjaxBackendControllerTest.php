@@ -23,7 +23,11 @@ class AjaxBackendControllerTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $this->importDataSet('/home/runner/work/pxa_siteimprove/pxa_siteimprove/Tests/Fixtures/Database/pages.xml');
+        if (self::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
+            $this->importDataSet('/home/runner/work/pxa_siteimprove/pxa_siteimprove/Tests/Fixtures/Database/pages.xml');
+        } else {
+            $this->importDataSet('/home/runner/work/pxa_siteimprove/pxa_siteimprove/Tests/Fixtures/Database/pages-legacy.xml');
+        }
 
         $this->setUpBackendUserFromFixture(1);
         $this->setUpFrontendRootPage(1);
