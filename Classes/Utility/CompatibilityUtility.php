@@ -70,7 +70,7 @@ class CompatibilityUtility
 
         /** @var ContentObjectRenderer $cObj */
         $cObj = GeneralUtility::makeInstance(ContentObjectRenderer::class);
-var_dump($tsfe->config);die();
+
         $typoLinkConf = [
             'parameter' => 't3://page?uid=' . $pageId,
             'forceAbsoluteUrl' => 1
