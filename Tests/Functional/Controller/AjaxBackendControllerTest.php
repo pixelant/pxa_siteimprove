@@ -45,11 +45,11 @@ class AjaxBackendControllerTest extends FunctionalTestCase
             $mockTemplateService->loaded = true;
 
             /** @var TypoScriptParser $typoScriptParser */
-            $typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
+            /*$typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
             $typoScriptParser->parse(file_get_contents('/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts'));
 
             $mockTsfe = $this->createMock(TypoScriptFrontendController::class);
-            $mockTsfe->config = $typoScriptParser->setup;
+            $mockTsfe->config = $typoScriptParser->setup;*/
         }
 
         $this->setUpBackendUserFromFixture(1);
