@@ -3,6 +3,7 @@
 namespace Pixelant\PxaSiteimprove\Tests\Functional\Controller;
 
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
+use PHPUnit\Framework\Exception;
 use Pixelant\PxaSiteimprove\Controller\AjaxBackendController;
 use Pixelant\PxaSiteimprove\Utility\CompatibilityUtility;
 use TYPO3\CMS\Core\Http\ServerRequest;
@@ -52,7 +53,11 @@ class AjaxBackendControllerTest extends FunctionalTestCase
     {
         $request = (new ServerRequest())->withQueryParams(['id' => 2]);
         $response = $this->subject->getPageLinkAction($request);
-        $body = $response->getBody()->read(9999);
+        try {
+            $body = (string)$response->getBody();
+        } catch (Exception $e) {
+            var_dump($e);die();
+        }
 
         if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(10000000)) {
             $this->assertEquals(
