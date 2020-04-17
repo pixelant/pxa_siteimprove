@@ -50,7 +50,8 @@ class CompatibilityUtility
                 TypoScriptFrontendController::class,
                 [],
                 $pageId,
-                0
+                0,
+                true
             );
 
             $GLOBALS['TSFE'] = $tsfe;
