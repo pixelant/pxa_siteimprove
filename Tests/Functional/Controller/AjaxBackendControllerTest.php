@@ -45,8 +45,6 @@ class AjaxBackendControllerTest extends FunctionalTestCase
      */
     public function getPageLinkActionReturnsCorrectUrl()
     {
-        $_ENV['TYPO3_REQUEST_HOST'] = 'localhost';
-
         $request = (new ServerRequest())->withQueryParams(['id' => 2]);
         $response = $this->subject->getPageLinkAction($request);
         $body = (string)$response->getBody();
@@ -58,7 +56,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
             );
         } else {
             $this->assertEquals(
-                '',
+                '{"pageUrl":"http://Build/bin/index.php?id=2"}',
                 $body
             );
         }
