@@ -58,7 +58,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
             );
         } else {
             $this->assertEquals(
-                '{"pageUrl":"/dummy-1-2"}',
+                '',
                 $body
             );
         }
