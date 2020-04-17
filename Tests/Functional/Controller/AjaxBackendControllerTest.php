@@ -40,18 +40,6 @@ class AjaxBackendControllerTest extends FunctionalTestCase
                 1,
                 ['/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts']
             );
-
-            /*$mockTemplateService = $this->createMock(TemplateService::class);
-            $mockTemplateService->loaded = true;*/
-            $prophesizedTemplateService = $this->prophesize(TemplateService::class);
-            $prophesizedTemplateService->loaded = true;
-
-            /** @var TypoScriptParser $typoScriptParser */
-            /*$typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
-            $typoScriptParser->parse(file_get_contents('/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts'));
-
-            $mockTsfe = $this->createMock(TypoScriptFrontendController::class);
-            $mockTsfe->config = $typoScriptParser->setup;*/
         }
 
         $this->setUpBackendUserFromFixture(1);
@@ -66,6 +54,18 @@ class AjaxBackendControllerTest extends FunctionalTestCase
      */
     public function getPageLinkActionReturnsCorrectUrl()
     {
+        $mockTemplateService = $this->createMock(TemplateService::class);
+$mockTemplateService->loaded = true;
+        $prophesizedTemplateService = $this->prophesize(TemplateService::class);
+        $prophesizedTemplateService->loaded = true;
+
+        /** @var TypoScriptParser $typoScriptParser */
+        /*$typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
+        $typoScriptParser->parse(file_get_contents('/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts'));
+
+        $mockTsfe = $this->createMock(TypoScriptFrontendController::class);
+        $mockTsfe->config = $typoScriptParser->setup;*/
+
         $request = (new ServerRequest())->withQueryParams(['id' => 2]);
         $response = $this->subject->getPageLinkAction($request);
         $body = (string)$response->getBody();
