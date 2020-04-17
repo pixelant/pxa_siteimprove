@@ -40,8 +40,10 @@ class AjaxBackendControllerTest extends FunctionalTestCase
         $request = (new ServerRequest())->withQueryParams(['id' => 2]);
         $response = $this->subject->getPageLinkAction($request);
         $body = (string)$response->getBody();
-        $jsonArray = json_decode($body, true);
 
-        var_dump($body);
+        $this->assertEquals(
+            '{"pageUrl":"/dummy-1-2"}',
+            $body
+        );
     }
 }
