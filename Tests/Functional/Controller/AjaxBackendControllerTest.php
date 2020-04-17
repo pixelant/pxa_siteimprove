@@ -11,8 +11,10 @@ use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Http\Uri;
 use TYPO3\CMS\Core\Site\SiteFinder;
+use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
 use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class AjaxBackendControllerTest extends FunctionalTestCase
 {
@@ -38,6 +40,16 @@ class AjaxBackendControllerTest extends FunctionalTestCase
                 1,
                 ['/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts']
             );
+
+            $mockTemplateService = $this->createMock(TemplateService::class);
+            $mockTemplateService->loaded = true;
+
+            /** @var TypoScriptParser $typoScriptParser */
+            $typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
+            $typoScriptParser->parse(file_get_contents('/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts'));
+
+            $mockTsfe = $this->createMock(TypoScriptFrontendController::class);
+            $mockTsfe->config = $typoScriptParser->setup;
         }
 
         $this->setUpBackendUserFromFixture(1);
