@@ -59,7 +59,6 @@ class CompatibilityUtility
             $tsfe->connectToDB();
             $tsfe->initFEuser();
             $tsfe->initTemplate();
-            $tsfe->tmpl->loaded = true;
             $tsfe->getConfigArray();
 
             // Set linkVars, absRefPrefix, etc

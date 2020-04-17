@@ -41,8 +41,10 @@ class AjaxBackendControllerTest extends FunctionalTestCase
                 ['/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts']
             );
 
-            $mockTemplateService = $this->createMock(TemplateService::class);
-            $mockTemplateService->loaded = true;
+            /*$mockTemplateService = $this->createMock(TemplateService::class);
+            $mockTemplateService->loaded = true;*/
+            $prophesizedTemplateService = $this->prophesize(TemplateService::class);
+            $prophesizedTemplateService->loaded = true;
 
             /** @var TypoScriptParser $typoScriptParser */
             /*$typoScriptParser = GeneralUtility::makeInstance(TypoScriptParser::class);
