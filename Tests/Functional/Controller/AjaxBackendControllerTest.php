@@ -30,8 +30,17 @@ class AjaxBackendControllerTest extends FunctionalTestCase
             $this->importDataSet('/home/runner/work/pxa_siteimprove/pxa_siteimprove/Tests/Fixtures/Database/pages-legacy.xml');
         }
 
+        if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(10000000)) {
+            $this->setUpFrontendRootPage(1);
+        } else {
+            $this->setUpFrontendRootPage(
+                1,
+                ['/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts']
+            );
+        }
+
         $this->setUpBackendUserFromFixture(1);
-        $this->setUpFrontendRootPage(1);
+
         Bootstrap::initializeLanguageObject();
 
         $this->subject = new AjaxBackendController();
