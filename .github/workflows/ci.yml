@@ -7,86 +7,86 @@ on:
 name: CI
 
 jobs:
-#  php-lint:
-#    name: PHP linter
-#
-#    runs-on: ubuntu-latest
-#
-#    strategy:
-#      matrix:
-#        php-version:
-#          - 5.5
-#          - 5.6
-#          - 7.0
-#          - 7.1
-#          - 7.2
-#          - 7.3
-#          - 7.4
-#        include:
-#          - php-version: 5.5
-#            exclude-pattern: -not -path Classes/Middleware/* -prune
-#          - php-version: 5.6
-#            exclude-pattern: -not -path Classes/Middleware/* -prune
-#
-#    steps:
-#      - name: Configure PHP ${{ matrix.php-version }}
-#        uses: shivammathur/setup-php@v2
-#        with:
-#          php-version: ${{ matrix.php-version }}
-#
-#      - name: Checkout
-#        uses: actions/checkout@v1
-#
-#      - name: Run PHP lint
-#        run: |
-#          echo "${{ matrix.exclude-pattern }}"
-#          find *.php Classes/ Configuration/ Tests/ -name '*.php' ${{ matrix.exclude-pattern }}
-#          find *.php Classes/ Configuration/ Tests/ -name '*.php' ${{ matrix.exclude-pattern }} -print0 | xargs -0 -n 1 -P 4 php -l
-#
-#  typoscript-lint:
-#    name: TypoScript linter
-#
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v1
-#
-#      - name: "Cache dependencies installed with composer"
-#        uses: actions/cache@v1
-#        with:
-#          path: ~/.composer/cache
-#          key: php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
-#          restore-keys: |
-#            php${{ matrix.php-version }}-composer-
-#      - name: Install Composer dependencies
-#        run: composer install --no-progress
-#
-#      - name: Run TypoScript lint
-#        run: composer ci:ts:lint
-#
-#  php-code-sniffer:
-#    name: PHP Code Sniffer
-#
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Checkout
-#        uses: actions/checkout@v1
-#
-#      - name: "Cache dependencies installed with composer"
-#        uses: actions/cache@v1
-#        with:
-#          path: ~/.composer/cache
-#          key: php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
-#          restore-keys: |
-#            php${{ matrix.php-version }}-composer-
-#      - name: Install Composer dependencies
-#        run: composer install --no-progress
-#
-#      - name: Run PHP Code Sniffer
-#        run: composer ci:php:sniff
-#
+  php-lint:
+    name: PHP linter
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version:
+          - 5.5
+          - 5.6
+          - 7.0
+          - 7.1
+          - 7.2
+          - 7.3
+          - 7.4
+        include:
+          - php-version: 5.5
+            exclude-pattern: -not -path Classes/Middleware/* -prune
+          - php-version: 5.6
+            exclude-pattern: -not -path Classes/Middleware/* -prune
+
+    steps:
+      - name: Configure PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Run PHP lint
+        run: |
+          echo "${{ matrix.exclude-pattern }}"
+          find *.php Classes/ Configuration/ Tests/ -name '*.php' ${{ matrix.exclude-pattern }}
+          find *.php Classes/ Configuration/ Tests/ -name '*.php' ${{ matrix.exclude-pattern }} -print0 | xargs -0 -n 1 -P 4 php -l
+
+  typoscript-lint:
+    name: TypoScript linter
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: "Cache dependencies installed with composer"
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            php${{ matrix.php-version }}-composer-
+      - name: Install Composer dependencies
+        run: composer install --no-progress
+
+      - name: Run TypoScript lint
+        run: composer ci:ts:lint
+
+  php-code-sniffer:
+    name: PHP Code Sniffer
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: "Cache dependencies installed with composer"
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            php${{ matrix.php-version }}-composer-
+      - name: Install Composer dependencies
+        run: composer install --no-progress
+
+      - name: Run PHP Code Sniffer
+        run: composer ci:php:sniff
+
 #  docs-generate:
 #    name: Docs Generate & Check
 #
