@@ -45,6 +45,7 @@ class AjaxBackendController
             return GeneralUtility::makeInstance(JsonResponse::class, $this->responseArray);
         }
 
+        /** @var Response $response */
         $response = GeneralUtility::makeInstance(Response::class);
 
         $response = $response->withHeader('Content-Type', 'application/json; charset=utf-8');
