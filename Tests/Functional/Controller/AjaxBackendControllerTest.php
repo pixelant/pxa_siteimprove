@@ -8,13 +8,6 @@ use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use Pixelant\PxaSiteimprove\Controller\AjaxBackendController;
 use Pixelant\PxaSiteimprove\Utility\CompatibilityUtility;
 use TYPO3\CMS\Core\Http\ServerRequest;
-use TYPO3\CMS\Core\Core\Bootstrap;
-use TYPO3\CMS\Core\Http\Uri;
-use TYPO3\CMS\Core\Site\SiteFinder;
-use TYPO3\CMS\Core\TypoScript\Parser\TypoScriptParser;
-use TYPO3\CMS\Core\TypoScript\TemplateService;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 class AjaxBackendControllerTest extends FunctionalTestCase
 {
@@ -52,6 +45,8 @@ class AjaxBackendControllerTest extends FunctionalTestCase
      */
     public function getPageLinkActionReturnsCorrectUrl()
     {
+        $_ENV['TYPO3_REQUEST_HOST'] = 'localhost';
+
         $request = (new ServerRequest())->withQueryParams(['id' => 2]);
         $response = $this->subject->getPageLinkAction($request);
         $body = (string)$response->getBody();
