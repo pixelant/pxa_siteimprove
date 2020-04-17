@@ -23,7 +23,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $this->importDataSet('/home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/vendor/nimut/testing-framework/res/Fixtures/Database/pages.xml');
+        $this->importDataSet('/home/runner/work/pxa_siteimprove/pxa_siteimprove/Tests/Fixtures/Database/pages.xml');
 
         $this->setUpBackendUserFromFixture(1);
         $this->setUpFrontendRootPage(1);
