@@ -48,16 +48,15 @@ class CompatibilityUtility
             /** @var TypoScriptFrontendController $tsfe */
             $tsfe = GeneralUtility::makeInstance(
                 TypoScriptFrontendController::class,
-                $GLOBALS['TYPO3_CONF_VARS'],
+                [],
                 $pageId,
-                ''
+                0
             );
 
             $GLOBALS['TSFE'] = $tsfe;
 
             $tsfe->connectToDB();
             $tsfe->initFEuser();
-            $tsfe->determineId();
             $tsfe->initTemplate();
             $tsfe->getConfigArray();
 
@@ -71,7 +70,7 @@ class CompatibilityUtility
         $cObj = GeneralUtility::makeInstance(ContentObjectRenderer::class);
 
         $typoLinkConf = [
-            'parameter' => $pageId,
+            'parameter' => 't3://page?uid=' . $pageId,
             'forceAbsoluteUrl' => 1
         ];
 
