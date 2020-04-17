@@ -55,7 +55,7 @@ class CompatibilityUtility
             );
 
             $GLOBALS['TSFE'] = $tsfe;
-
+$tsfe->forceTemplateParsing = true;
             $tsfe->connectToDB();
             $tsfe->initFEuser();
             $tsfe->initTemplate();
