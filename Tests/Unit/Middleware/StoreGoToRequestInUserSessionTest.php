@@ -23,7 +23,9 @@ class StoreGoToRequestInUserSessionTest extends UnitTestCase
     {
         parent::setUp();
 
-        $this->subject = new StoreGoToRequestInUserSession();
+        if ($this->typo3VersionSupportsMiddlewares()) {
+            $this->subject = new StoreGoToRequestInUserSession();
+        }
     }
 
     /**
