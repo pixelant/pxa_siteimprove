@@ -131,7 +131,7 @@ jobs:
             database-image: mariadb:latest
           - typo3-version: "^10.3"
             database-image: mariadb:latest
-          exclude:
+        exclude:
           - typo3-version: "^7.6"
             php-version: 7.2
           - typo3-version: "^7.6"
