@@ -211,6 +211,8 @@ jobs:
           composer show
 
       - name: Run unit tests
+        env:
+          TYPO3_PATH_ROOT: /home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/public
         run: composer ci:tests:unit
 
       - name: Run functional tests
