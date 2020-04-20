@@ -53,10 +53,11 @@ class AjaxBackendControllerTest extends FunctionalTestCase
     {
         $request = (new ServerRequest())->withQueryParams(['id' => 2]);
         $response = $this->subject->getPageLinkAction($request);
-        try {
-            $body = (string)$response->getBody();
-        } catch (\Exception $e) {
-            $body = $response->getBody()->getContents();
+        $body = (string)$response->getBody();
+
+        if (is_object($body)) {
+            var_dump($body);
+            die();
         }
 
 
