@@ -58,7 +58,6 @@ class CompatibilityUtility
 
             $tsfe->connectToDB();
             $tsfe->initFEuser();
-            $tsfe->determineId();
             $tsfe->initTemplate();
             $tsfe->getConfigArray();
 
