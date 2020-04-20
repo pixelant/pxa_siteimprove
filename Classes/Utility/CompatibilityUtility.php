@@ -71,8 +71,14 @@ class CompatibilityUtility
         /** @var ContentObjectRenderer $cObj */
         $cObj = GeneralUtility::makeInstance(ContentObjectRenderer::class);
 
+        $linkString = 't3://page?uid=' . $pageId;
+
+        if (self::typo3VersionIsLessThan('8.0')) {
+            $linkString = (string)$pageId;
+        }
+
         $typoLinkConf = [
-            'parameter' => 't3://page?uid=' . $pageId,
+            'parameter' => $linkString,
             'forceAbsoluteUrl' => 1
         ];
 
