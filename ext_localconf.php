@@ -13,8 +13,8 @@ if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'][
     ];
 }
 
-if (\Pixelant\PxaSiteimprove\Utility\CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(8000000)) {
-    if(\Pixelant\PxaSiteimprove\Utility\CompatibilityUtility::typo3VersionIsLessThan(9005000)) {
+if (\Pixelant\PxaSiteimprove\Utility\CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo('8.0')) {
+    if(\Pixelant\PxaSiteimprove\Utility\CompatibilityUtility::typo3VersionIsLessThan('9.5')) {
         // Handled by middleware in >=9.5
         // @extensionScannerIgnoreLine
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_userauth.php']['postUserLookUp'][] =
