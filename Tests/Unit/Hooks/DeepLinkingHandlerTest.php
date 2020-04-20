@@ -2,8 +2,8 @@
 
 namespace Pixelant\PxaSiteimprove\Tests\Unit\Hooks;
 
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use Pixelant\PxaSiteimprove\Hooks\DeepLinkingHandler;
+use Pixelant\PxaSiteimprove\TestCase\UnitTestCase;
 use Pixelant\PxaSiteimprove\Utility\CompatibilityUtility;
 use TYPO3\CMS\Backend\Controller\BackendController;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;

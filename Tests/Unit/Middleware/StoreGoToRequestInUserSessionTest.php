@@ -2,8 +2,8 @@
 
 namespace Pixelant\PxaSiteimprove\Tests\Unit\Middleware;
 
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use Pixelant\PxaSiteimprove\Middleware\StoreGoToRequestInUserSession;
+use Pixelant\PxaSiteimprove\TestCase\UnitTestCase;
 use Pixelant\PxaSiteimprove\Utility\CompatibilityUtility;
 use TYPO3\CMS\Backend\Http\RequestHandler;
 use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;

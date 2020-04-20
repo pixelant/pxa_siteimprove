@@ -15,8 +15,8 @@ namespace Pixelant\PxaSiteimprove\Tests\Unit\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
-use Nimut\TestingFramework\TestCase\UnitTestCase;
 use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
+use Pixelant\PxaSiteimprove\TestCase\UnitTestCase;
 
 /**
  * Test case for class Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService.
