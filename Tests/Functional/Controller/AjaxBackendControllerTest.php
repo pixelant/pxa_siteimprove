@@ -20,13 +20,13 @@ class AjaxBackendControllerTest extends FunctionalTestCase
 
         $rootPath = '/home/runner/work/pxa_siteimprove/pxa_siteimprove/';
 
-        if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9005000)) {
+        if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo('9.5')) {
             $this->importDataSet($rootPath . 'Tests/Fixtures/Database/pages.xml');
         } else {
             $this->importDataSet($rootPath . 'Tests/Fixtures/Database/pages-legacy.xml');
         }
 
-        if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(10000000)) {
+        if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo('10.0')) {
             $this->setUpFrontendRootPage(1);
         } else {
             $this->setUpFrontendRootPage(
@@ -49,7 +49,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
         $response = $this->subject->getPageLinkAction($request);
         $body = (string)$response->getBody();
 
-        if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9005000)) {
+        if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo('9.5')) {
             $expected = '{"pageUrl":"\/dummy-1-2"}';
         } else {
             $expected = '{"pageUrl":"http:\/\/Build\/bin\/index.php?id=2"}';
