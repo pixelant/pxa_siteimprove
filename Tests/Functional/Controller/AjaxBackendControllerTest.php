@@ -6,6 +6,7 @@ use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 use Pixelant\PxaSiteimprove\Controller\AjaxBackendController;
 use Pixelant\PxaSiteimprove\Utility\CompatibilityUtility;
 use TYPO3\CMS\Core\Http\ServerRequest;
+use TYPO3\CMS\Core\TimeTracker\NullTimeTracker;
 
 class AjaxBackendControllerTest extends FunctionalTestCase
 {
@@ -19,6 +20,10 @@ class AjaxBackendControllerTest extends FunctionalTestCase
         parent::setUp();
 
         $rootPath = '/home/runner/work/pxa_siteimprove/pxa_siteimprove/';
+
+        if (CompatibilityUtility::typo3VersionIsLessThan('8.0')) {
+            $GLOBALS['TT'] = new NullTimeTracker();
+        }
 
         if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo('9.5')) {
             $this->importDataSet($rootPath . 'Tests/Fixtures/Database/pages.xml');
