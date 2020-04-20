@@ -190,23 +190,30 @@ jobs:
           key: php${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: |
             php${{ matrix.php-version }}-composer-
+
       - name: Install TYPO3 Core
         env:
           TYPO3: ${{ matrix.typo3-version }}
         run: |
           composer require typo3/minimal:"${{ matrix.typo3-version }}"
           composer show
+
       - name: Install lowest dependencies with composer
         if: matrix.composer-dependencies == 'lowest'
         run: |
           composer update --no-ansi --no-interaction --no-progress --no-suggest --prefer-lowest
           composer show
+
       - name: Install highest dependencies with composer
         if: matrix.composer-dependencies == 'highest'
         run: |
           composer update --no-ansi --no-interaction --no-progress --no-suggest
           composer show
+
       - name: Run unit tests
+        run: composer ci:tests:unit
+
+      - name: Run functional tests
         env:
           TYPO3_PATH_ROOT: /home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/public
           typo3DatabaseHost: 127.0.0.1
