@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pixelant\PxaSiteimprove\TestCase;
-
 
 use Nimut\TestingFramework\TestCase\UnitTestCase as NimutUnitTestCase;
 
@@ -24,5 +22,4 @@ class UnitTestCase extends NimutUnitTestCase
 
         return $this->getMock($originalClassName);
     }
-
 }
