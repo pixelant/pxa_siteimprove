@@ -48,4 +48,18 @@ class AjaxBackendController
 
         return $response;
     }
+
+    /**
+     * Return string
+     *
+     * This avoids some testing errors
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return self::class;
+    }
+
+
 }
