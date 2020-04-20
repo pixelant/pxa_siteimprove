@@ -50,21 +50,16 @@ class AjaxBackendControllerTest extends FunctionalTestCase
         $body = (string)$response->getBody();
 
         if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(10000000)) {
-            $this->assertEquals(
-                '{"pageUrl":"\/dummy-1-2"}',
-                $body
-            );
+            $expected = '{"pageUrl":"\/dummy-1-2"}';
         } elseif (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
-            $this->assertEquals(
-                '{"pageUrl":"http:\/\/\/"}',
-                $body
-            );
+            $expected = '{"pageUrl":"http:\/\/\/"}';
         } else {
-            var_dump(CompatibilityUtility::getTypo3VersionInteger());
-            $this->assertEquals(
-                '{"pageUrl":"http:\/\/Build\/bin\/index.php?id=2"}',
-                $body
-            );
+            $expected = '{"pageUrl":"http:\/\/Build\/bin\/index.php?id=2"}';
         }
+
+        $this->assertEquals(
+            $expected,
+            $body
+        );
     }
 }
