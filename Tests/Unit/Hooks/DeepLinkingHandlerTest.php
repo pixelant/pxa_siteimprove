@@ -113,7 +113,6 @@ class DeepLinkingHandlerTest extends UnitTestCase
         if ($this->typo3VersionSupportsDeeplinking()) {
             $expected = 'web_layout->id=1&SET[language]=2';
 
-
             $backendUserAuthentication = $this->createMock(BackendUserAuthentication::class);
 
             $backendUserAuthentication
@@ -147,5 +146,4 @@ class DeepLinkingHandlerTest extends UnitTestCase
 
         return true;
     }
-
 }
