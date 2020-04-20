@@ -60,7 +60,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
                 $body
             );
         } else {
-            echo CompatibilityUtility::getTypo3VersionInteger(); die();
+            var_dump(CompatibilityUtility::getTypo3VersionInteger());
             $this->assertEquals(
                 '{"pageUrl":"http:\/\/Build\/bin\/index.php?id=2"}',
                 $body
