@@ -7,6 +7,8 @@ use Nimut\TestingFramework\TestCase\UnitTestCase as NimutUnitTestCase;
 /**
  * Compatibility class with older versions of PhpUnit
  *
+ * Can be removed with support for PHP 5.5
+ *
  * @package Pixelant\PxaSiteimprove\TestCase
  */
 class UnitTestCase extends NimutUnitTestCase
