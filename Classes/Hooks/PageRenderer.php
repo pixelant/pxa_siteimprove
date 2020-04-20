@@ -133,6 +133,52 @@ class PageRenderer implements SingletonInterface
     }
 
     /**
+     * Get eid url to fetch FE page ID url
+     *
+     * @param $pageUid
+     * @param $domain
+     * @return string
+     */
+    protected function getEidUrl($pageUid, $domain)
+    {
+        //Define scheme
+        $reverseProxyIP = explode(',', $GLOBALS['TYPO3_CONF_VARS']['SYS']['reverseProxyIP']);
+        $reverseProxySSL = explode(',', $GLOBALS['TYPO3_CONF_VARS']['SYS']['reverseProxySSL']);
+        $ipOfProxyOrClient = $_SERVER['REMOTE_ADDR'];
+
+        if (
+            (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+            (in_array($ipOfProxyOrClient, $reverseProxyIP) && isset($ipOfProxyOrClient) &&
+                (in_array($ipOfProxyOrClient, $reverseProxySSL) || $reverseProxySSL[0] === '*'))
+        ) {
+            $scheme = 'https';
+        } else {
+            $scheme = 'http';
+        }
+
+        if (!empty($domain)) {
+            $port = GeneralUtility::getIndpEnv('TYPO3_PORT');
+            if (!empty($port)) {
+                // Check if the domain already contains a port if so do not add port
+                if (!preg_match('/\:\b/', $domain)) {
+                    $domain .= ':' . $port;
+                }
+            }
+        } else {
+            $domain = GeneralUtility::getIndpEnv('HTTP_HOST');
+        }
+
+        $eidUrl = sprintf(
+            '%s://%s/index.php?eID=pxa_siteimprove&id=%s',
+            $scheme,
+            $domain,
+            (int) $pageUid
+        );
+
+        return $eidUrl;
+    }
+
+    /**
      * @return  FrontendInterface
      * @throws NoSuchCacheException
      */
