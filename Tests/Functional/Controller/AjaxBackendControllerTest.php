@@ -55,7 +55,6 @@ class AjaxBackendControllerTest extends FunctionalTestCase
                 $body
             );
         } elseif (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
-            // TODO: Return proper data in TYPO3 v9
             $this->assertEquals(
                 '{"pageUrl":"http:\/\/\/"}',
                 $body
