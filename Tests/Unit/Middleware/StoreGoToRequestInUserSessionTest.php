@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Pixelant\PxaSiteimprove\Tests\Unit\Middleware;
-
 
 use Nimut\TestingFramework\TestCase\UnitTestCase;
 use Pixelant\PxaSiteimprove\Middleware\StoreGoToRequestInUserSession;
@@ -25,7 +23,7 @@ class StoreGoToRequestInUserSessionTest extends UnitTestCase
     {
         parent::setUp();
 
-        $this->subject = new StoreGoToRequestInUserSession;
+        $this->subject = new StoreGoToRequestInUserSession();
     }
 
     /**
@@ -116,7 +114,8 @@ class StoreGoToRequestInUserSessionTest extends UnitTestCase
 
     protected function typo3VersionSupportsMiddlewares()
     {
-        if (CompatibilityUtility::typo3VersionIsLessThan('9.5')
+        if (
+            CompatibilityUtility::typo3VersionIsLessThan('9.5')
         ) {
             $this->markTestSkipped('Middleware. Not used in TYPO3 versions <9.5');
             return false;
