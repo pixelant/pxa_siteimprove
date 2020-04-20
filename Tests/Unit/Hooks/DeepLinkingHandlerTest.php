@@ -141,7 +141,7 @@ class DeepLinkingHandlerTest extends UnitTestCase
     {
         if (
             CompatibilityUtility::typo3VersionIsLessThan('8.0')
-            && CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo('9.5')
+            || CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo('9.5')
         ) {
             $this->markTestSkipped('Only used in TYPO3 v8');
             return false;
