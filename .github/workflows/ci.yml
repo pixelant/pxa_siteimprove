@@ -211,6 +211,7 @@ jobs:
           composer show
 
       - name: Run unit tests
+        # Environment variable can be removed when TYPO3 v7 support ends
         env:
           TYPO3_PATH_ROOT: /home/runner/work/pxa_siteimprove/pxa_siteimprove/.Build/public
         run: composer ci:tests:unit
