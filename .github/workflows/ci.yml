@@ -122,7 +122,16 @@ jobs:
           - 7.2
           - 7.3
           - 7.4
-        exclude:
+        include:
+          - typo3-version: "^7.6"
+            database-image: mysql:5.7
+          - typo3-version: "^8.7"
+            database-image: mariadb:latest
+          - typo3-version: "^9.5"
+            database-image: mariadb:latest
+          - typo3-version: "^10.3"
+            database-image: mariadb:latest
+          exclude:
           - typo3-version: "^7.6"
             php-version: 7.2
           - typo3-version: "^7.6"
@@ -154,7 +163,7 @@ jobs:
 
     services:
       mysql:
-        image: mariadb:latest
+        image: ${{ matrix.database-image }}
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: false
           MYSQL_DATABASE: typo3
