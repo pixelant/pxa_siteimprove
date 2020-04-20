@@ -60,6 +60,12 @@ class AjaxBackendControllerTest extends FunctionalTestCase
                 '{"pageUrl":"\/dummy-1-2"}',
                 $body
             );
+        } elseif (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
+            // TODO: Return proper data in TYPO3 v9
+            $this->assertEquals(
+                '{"pageUrl":"http:\/\/\/"}',
+                $body
+            );
         } else {
             $this->assertEquals(
                 '{"pageUrl":"http:\/\/Build\/bin\/index.php?id=2"}',
