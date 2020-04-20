@@ -15,9 +15,9 @@ namespace Pixelant\PxaSiteimprove\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Pixelant\PxaSiteimprove\Utility\CompatibilityUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\VersionNumberUtility;
 
 /**
  * Service class to get the settings from Extension Manager
@@ -32,11 +32,7 @@ class ExtensionManagerConfigurationService
     public static function getSettings()
     {
         $settings = [];
-        if (
-            VersionNumberUtility::convertVersionNumberToInteger(
-                VersionNumberUtility::getNumericTypo3Version()
-            ) < 9000000
-        ) {
+        if (CompatibilityUtility::typo3VersionIsLessThan('9.0')) {
             // @extensionScannerIgnoreLine
             $settingsString = $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['pxa_siteimprove'];
             if (isset($settingsString)) {

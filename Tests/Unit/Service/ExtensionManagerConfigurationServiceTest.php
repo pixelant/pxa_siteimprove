@@ -23,6 +23,14 @@ use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
  */
 class ExtensionManagerConfigurationServiceTest extends UnitTestCase
 {
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['pxa_siteimprove'] = [];
+    }
+
+
     /**
      * @test
      */
