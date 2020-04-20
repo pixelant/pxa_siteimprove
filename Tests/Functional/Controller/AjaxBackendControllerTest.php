@@ -28,12 +28,6 @@ class AjaxBackendControllerTest extends FunctionalTestCase
 
         if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(10000000)) {
             $this->setUpFrontendRootPage(1);
-        } elseif (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
-            $this->setUpFrontendRootPage(
-                1,
-                [$rootPath . '.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts'],
-                [$rootPath . '.Build/vendor/nimut/testing-framework/res/Fixtures/Frontend/Site.yaml']
-            );
         } else {
             $this->setUpFrontendRootPage(
                 1,
