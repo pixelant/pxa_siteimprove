@@ -60,6 +60,4 @@ class AjaxBackendController
     {
         return self::class;
     }
-
-
 }
