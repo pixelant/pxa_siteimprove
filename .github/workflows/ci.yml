@@ -113,7 +113,7 @@ jobs:
           - "^10.3"
         composer-dependencies:
           - highest
-#          - lowest
+          - lowest
         php-version:
           - 5.5
           - 5.6
