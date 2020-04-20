@@ -29,7 +29,7 @@ class StoreGoToRequestInUserSession implements MiddlewareInterface
      *
      * @return BackendUserAuthentication
      */
-    protected function getBackendUser(): BackendUserAuthentication
+    protected function getBackendUser(): ?BackendUserAuthentication
     {
         return $GLOBALS['BE_USER'];
     }
