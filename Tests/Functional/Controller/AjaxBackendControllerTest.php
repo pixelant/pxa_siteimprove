@@ -51,7 +51,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
 
         if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(10000000)) {
             $expected = '{"pageUrl":"\/dummy-1-2"}';
-        } elseif (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
+        } elseif (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9005000)) {
             $expected = '{"pageUrl":"http:\/\/\/"}';
         } else {
             $expected = '{"pageUrl":"http:\/\/Build\/bin\/index.php?id=2"}' . CompatibilityUtility::getTypo3VersionInteger();

@@ -26,7 +26,7 @@ class CompatibilityUtility
      */
     public static function getPageUrl($pageId)
     {
-        if (self::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
+        if (self::typo3VersionIsGreaterThanOrEqualTo(9005000)) {
             /** @var SiteFinder $siteFinder */
             $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
 
@@ -94,7 +94,7 @@ class CompatibilityUtility
      */
     public static function getFirstDomainInRootline($pageId)
     {
-        if (self::typo3VersionIsLessThan(9400000)) {
+        if (self::typo3VersionIsLessThan(9004000)) {
             $rootLine = BackendUtility::BEgetRootLine($pageId);
 
             return BackendUtility::firstDomainRecord($rootLine);
