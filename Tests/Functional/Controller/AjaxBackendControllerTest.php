@@ -3,7 +3,6 @@
 namespace Pixelant\PxaSiteimprove\Tests\Functional\Controller;
 
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
-use PHPUnit\Framework\Exception;
 use Pixelant\PxaSiteimprove\Controller\AjaxBackendController;
 use Pixelant\PxaSiteimprove\Utility\CompatibilityUtility;
 use TYPO3\CMS\Core\Http\ServerRequest;
@@ -19,25 +18,26 @@ class AjaxBackendControllerTest extends FunctionalTestCase
     {
         parent::setUp();
 
+        $rootPath = '/home/runner/work/pxa_siteimprove/pxa_siteimprove/';
+
         if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
-            $this->importDataSet(
-                '/home/runner/work/pxa_siteimprove/pxa_siteimprove/Tests/Fixtures/Database/pages.xml'
-            );
+            $this->importDataSet($rootPath . 'Tests/Fixtures/Database/pages.xml');
         } else {
-            $this->importDataSet(
-                '/home/runner/work/pxa_siteimprove/pxa_siteimprove/Tests/Fixtures/Database/pages-legacy.xml'
-            );
+            $this->importDataSet($rootPath . 'Tests/Fixtures/Database/pages-legacy.xml');
         }
 
         if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(10000000)) {
             $this->setUpFrontendRootPage(1);
+        } elseif (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
+            $this->setUpFrontendRootPage(
+                1,
+                [$rootPath . '.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts'],
+                [$rootPath . '.Build/vendor/nimut/testing-framework/res/Fixtures/Frontend/Site.yaml']
+            );
         } else {
             $this->setUpFrontendRootPage(
                 1,
-                [
-                    '/home/runner/work/pxa_siteimprove/pxa_siteimprove/'
-                    . '.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts'
-                ]
+                [$rootPath . '.Build/vendor/nimut/testing-framework/res/Fixtures/TypoScript/JsonRenderer.ts']
             );
         }
 
