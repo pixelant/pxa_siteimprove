@@ -49,12 +49,6 @@ class AjaxBackendControllerTest extends FunctionalTestCase
         $response = $this->subject->getPageLinkAction($request);
         $body = (string)$response->getBody();
 
-        if (is_object($body)) {
-            var_dump($body);
-            die();
-        }
-
-
         if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(10000000)) {
             $this->assertEquals(
                 '{"pageUrl":"\/dummy-1-2"}',
