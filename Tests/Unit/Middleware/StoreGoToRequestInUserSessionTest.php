@@ -36,7 +36,7 @@ class StoreGoToRequestInUserSessionTest extends UnitTestCase
         if ($this->typo3VersionSupportsMiddlewares()) {
             $expected = 'page:1:2';
 
-            $backendUserAuthentication = $this->createMock(BackendUserAuthentication::class);
+            $backendUserAuthentication = $this->createCompatibleMock(BackendUserAuthentication::class);
             $backendUserAuthentication
                 ->expects($this->once())
                 ->method('setAndSaveSessionData')
@@ -45,7 +45,7 @@ class StoreGoToRequestInUserSessionTest extends UnitTestCase
                     $this->equalTo($expected)
                 );
 
-            $requestHandler = $this->createMock(RequestHandler::class);
+            $requestHandler = $this->createCompatibleMock(RequestHandler::class);
 
             $_REQUEST['tx_siteimprove_goto'] = $expected;
             $GLOBALS['BE_USER'] = $backendUserAuthentication;
@@ -65,7 +65,7 @@ class StoreGoToRequestInUserSessionTest extends UnitTestCase
         if ($this->typo3VersionSupportsMiddlewares()) {
             $expected = 'page:1:2';
 
-            $backendUserAuthentication = $this->createMock(BackendUserAuthentication::class);
+            $backendUserAuthentication = $this->createCompatibleMock(BackendUserAuthentication::class);
             $backendUserAuthentication
                 ->expects($this->never())
                 ->method('setAndSaveSessionData')
@@ -74,7 +74,7 @@ class StoreGoToRequestInUserSessionTest extends UnitTestCase
                     $this->equalTo($expected)
                 );
 
-            $requestHandler = $this->createMock(RequestHandler::class);
+            $requestHandler = $this->createCompatibleMock(RequestHandler::class);
 
             $GLOBALS['BE_USER'] = $backendUserAuthentication;
 
@@ -93,7 +93,7 @@ class StoreGoToRequestInUserSessionTest extends UnitTestCase
         if ($this->typo3VersionSupportsMiddlewares()) {
             $expected = 'page:1:2';
 
-            $backendUserAuthentication = $this->createMock(BackendUserAuthentication::class);
+            $backendUserAuthentication = $this->createCompatibleMock(BackendUserAuthentication::class);
             $backendUserAuthentication
                 ->expects($this->never())
                 ->method('setAndSaveSessionData')
@@ -102,7 +102,7 @@ class StoreGoToRequestInUserSessionTest extends UnitTestCase
                     $this->equalTo($expected)
                 );
 
-            $requestHandler = $this->createMock(RequestHandler::class);
+            $requestHandler = $this->createCompatibleMock(RequestHandler::class);
 
             $_REQUEST['tx_siteimprove_goto'] = $expected;
             $GLOBALS['BE_USER'] = null;

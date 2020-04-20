@@ -16,7 +16,7 @@ class UnitTestCase extends NimutUnitTestCase
     /**
      * @inheritDoc
      */
-    protected function createMock($originalClassName)
+    protected function createCompatibleMock($originalClassName)
     {
         if (method_exists(parent::class, 'createMock')) {
             return parent::createMock($originalClassName);

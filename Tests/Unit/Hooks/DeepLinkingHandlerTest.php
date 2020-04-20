@@ -33,7 +33,7 @@ class DeepLinkingHandlerTest extends UnitTestCase
         if ($this->typo3VersionSupportsDeeplinking()) {
             $expected = 'page:1:2';
 
-            $backendUserAuthentication = $this->createMock(BackendUserAuthentication::class);
+            $backendUserAuthentication = $this->createCompatibleMock(BackendUserAuthentication::class);
             $backendUserAuthentication
                 ->expects($this->once())
                 ->method('setAndSaveSessionData')
@@ -60,7 +60,7 @@ class DeepLinkingHandlerTest extends UnitTestCase
         if ($this->typo3VersionSupportsDeeplinking()) {
             $expected = 'page:1:2';
 
-            $backendUserAuthentication = $this->createMock(BackendUserAuthentication::class);
+            $backendUserAuthentication = $this->createCompatibleMock(BackendUserAuthentication::class);
             $backendUserAuthentication
                 ->expects($this->never())
                 ->method('setAndSaveSessionData')
@@ -87,7 +87,7 @@ class DeepLinkingHandlerTest extends UnitTestCase
         if ($this->typo3VersionSupportsDeeplinking()) {
             $expected = 'page:1:2';
 
-            $backendUserAuthentication = $this->createMock(BackendUserAuthentication::class);
+            $backendUserAuthentication = $this->createCompatibleMock(BackendUserAuthentication::class);
             $backendUserAuthentication
                 ->expects($this->never())
                 ->method('setAndSaveSessionData')
