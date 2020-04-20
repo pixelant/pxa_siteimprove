@@ -20,7 +20,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
 
         $rootPath = '/home/runner/work/pxa_siteimprove/pxa_siteimprove/';
 
-        if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
+        if (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9005000)) {
             $this->importDataSet($rootPath . 'Tests/Fixtures/Database/pages.xml');
         } else {
             $this->importDataSet($rootPath . 'Tests/Fixtures/Database/pages-legacy.xml');
@@ -54,7 +54,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
         } elseif (CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(9005000)) {
             $expected = '{"pageUrl":"http:\/\/\/"}';
         } else {
-            $expected = '{"pageUrl":"http:\/\/Build\/bin\/index.php?id=2"}' . CompatibilityUtility::getTypo3VersionInteger();
+            $expected = '{"pageUrl":"http:\/\/Build\/bin\/index.php?id=2"}';
         }
 
         $this->assertEquals(
