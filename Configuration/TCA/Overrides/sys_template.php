@@ -1,7 +1,7 @@
 <?php
 defined('TYPO3_MODE') or die();
 
-if (\Pixelant\PxaSiteimprove\Utility\CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo(8000000)) {
+if (\Pixelant\PxaSiteimprove\Utility\CompatibilityUtility::typo3VersionIsGreaterThanOrEqualTo('8.0')) {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
         'pxa_siteimprove',
         'Configuration/TypoScript/Deeplinking',

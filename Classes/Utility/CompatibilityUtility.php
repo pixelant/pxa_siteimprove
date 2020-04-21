@@ -26,7 +26,7 @@ class CompatibilityUtility
      */
     public static function getPageUrl($pageId)
     {
-        if (self::typo3VersionIsGreaterThanOrEqualTo(9500000)) {
+        if (self::typo3VersionIsGreaterThanOrEqualTo('9.5')) {
             /** @var SiteFinder $siteFinder */
             $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
 
@@ -37,7 +37,7 @@ class CompatibilityUtility
                 $pageLink = '';
             }
 
-            if ($pageLink !== '' || self::typo3VersionIsGreaterThanOrEqualTo(10000000)) {
+            if ($pageLink !== '' || self::typo3VersionIsGreaterThanOrEqualTo('10.0')) {
                 return $pageLink;
             }
         }
@@ -48,9 +48,10 @@ class CompatibilityUtility
             /** @var TypoScriptFrontendController $tsfe */
             $tsfe = GeneralUtility::makeInstance(
                 TypoScriptFrontendController::class,
-                $GLOBALS['TYPO3_CONF_VARS'],
+                [],
                 $pageId,
-                ''
+                0,
+                true
             );
 
             $GLOBALS['TSFE'] = $tsfe;
@@ -70,8 +71,14 @@ class CompatibilityUtility
         /** @var ContentObjectRenderer $cObj */
         $cObj = GeneralUtility::makeInstance(ContentObjectRenderer::class);
 
+        $linkString = 't3://page?uid=' . $pageId;
+
+        if (self::typo3VersionIsLessThan('8.0')) {
+            $linkString = (string)$pageId;
+        }
+
         $typoLinkConf = [
-            'parameter' => $pageId,
+            'parameter' => $linkString,
             'forceAbsoluteUrl' => 1
         ];
 
@@ -93,7 +100,7 @@ class CompatibilityUtility
      */
     public static function getFirstDomainInRootline($pageId)
     {
-        if (self::typo3VersionIsLessThan(9400000)) {
+        if (self::typo3VersionIsLessThan('9.4')) {
             $rootLine = BackendUtility::BEgetRootLine($pageId);
 
             return BackendUtility::firstDomainRecord($rootLine);
@@ -113,7 +120,7 @@ class CompatibilityUtility
      */
     public static function getApplicationContext()
     {
-        if (self::typo3VersionIsLessThan(10002000)) {
+        if (self::typo3VersionIsLessThan('10.2')) {
             return GeneralUtility::getApplicationContext();
         }
 
@@ -123,45 +130,45 @@ class CompatibilityUtility
     /**
      * Returns true if the current TYPO3 version is less than $version
      *
-     * @param int $version
+     * @param string $version
      * @return bool
      */
     public static function typo3VersionIsLessThan($version)
     {
-        return self::getTypo3VersionInteger() < $version;
+        return self::getTypo3VersionInteger() < VersionNumberUtility::convertVersionNumberToInteger($version);
     }
 
     /**
      * Returns true if the current TYPO3 version is less than or equal to $version
      *
-     * @param int $version
+     * @param string $version
      * @return bool
      */
     public static function typo3VersionIsLessThanOrEqualTo($version)
     {
-        return self::getTypo3VersionInteger() <= $version;
+        return self::getTypo3VersionInteger() <= VersionNumberUtility::convertVersionNumberToInteger($version);
     }
 
     /**
      * Returns true if the current TYPO3 version is greater than $version
      *
-     * @param int $version
+     * @param string $version
      * @return bool
      */
-    public static function typo3VersionIsGreaterThan(i $version)
+    public static function typo3VersionIsGreaterThan($version)
     {
-        return self::getTypo3VersionInteger() > $version;
+        return self::getTypo3VersionInteger() > VersionNumberUtility::convertVersionNumberToInteger($version);
     }
 
     /**
      * Returns true if the current TYPO3 version is greater than or equal to $version
      *
-     * @param int $version
+     * @param string $version
      * @return bool
      */
     public static function typo3VersionIsGreaterThanOrEqualTo($version)
     {
-        return self::getTypo3VersionInteger() >= $version;
+        return self::getTypo3VersionInteger() >= VersionNumberUtility::convertVersionNumberToInteger($version);
     }
 
     /**

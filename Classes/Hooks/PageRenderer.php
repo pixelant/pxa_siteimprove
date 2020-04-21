@@ -15,13 +15,17 @@ namespace Pixelant\PxaSiteimprove\Hooks;
  * The TYPO3 project - inspiring people to share!
  */
 
+use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
 use Pixelant\PxaSiteimprove\Utility\CompatibilityUtility;
 use TYPO3\CMS\Backend\Controller\PageLayoutController;
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
+use TYPO3\CMS\Core\Page\PageRenderer as T3PageRenderer;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use Pixelant\PxaSiteimprove\Service\ExtensionManagerConfigurationService;
+use TYPO3\CMS\Lang\LanguageService;
 
 /**
  * Class which adds the necessary resources for Siteimprove (https://siteimprove.com/).
@@ -35,10 +39,10 @@ class PageRenderer implements SingletonInterface
      * Wrapper function called by hook (\TYPO3\CMS\Core\Page\PageRenderer->render-preProcess)
      *
      * @param array $parameters An array of available parameters
-     * @param \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer The parent object that triggered this hook
+     * @param T3PageRenderer $pageRenderer The parent object that triggered this hook
      * @throws \Exception
      */
-    public function addResources(array $parameters, \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer)
+    public function addResources(array $parameters, T3PageRenderer $pageRenderer)
     {
         // Add the resources only to the 'Page' module
         if (
@@ -59,8 +63,6 @@ class PageRenderer implements SingletonInterface
 
                 if ($pageId > 0) {
                     $domain = CompatibilityUtility::getFirstDomainInRootline($pageId);
-
-                    $eidUrl = $this->getEidUrl($pageId, $domain);
 
                     $debugScript = '';
                     if ($debugMode === true) {
@@ -113,7 +115,7 @@ class PageRenderer implements SingletonInterface
     /**
      * Gets the current backend user
      *
-     * @return \TYPO3\CMS\Core\Authentication\BackendUserAuthentication
+     * @return BackendUserAuthentication
      */
     public function getBackendUser()
     {
@@ -123,7 +125,7 @@ class PageRenderer implements SingletonInterface
     /**
      * Getter for language service
      *
-     * @return \TYPO3\CMS\Lang\LanguageService
+     * @return LanguageService
      */
     public function getLanguageService()
     {
@@ -178,7 +180,7 @@ class PageRenderer implements SingletonInterface
 
     /**
      * @return  FrontendInterface
-     * @throws \TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException
+     * @throws NoSuchCacheException
      */
     protected function getCache()
     {

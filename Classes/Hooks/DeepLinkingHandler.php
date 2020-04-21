@@ -17,8 +17,9 @@ namespace Pixelant\PxaSiteimprove\Hooks;
 
 use TYPO3\CMS\Backend\Controller\BackendController;
 use TYPO3\CMS\Core\Authentication\AbstractUserAuthentication;
+use TYPO3\CMS\Core\SingletonInterface;
 
-class DeepLinkingHandler implements \TYPO3\CMS\Core\SingletonInterface
+class DeepLinkingHandler implements SingletonInterface
 {
 
     /**
