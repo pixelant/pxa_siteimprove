@@ -18,4 +18,8 @@
 
 .. role::   php(code)
 
+.. role:: sep (strong)
+
+.. role:: aspect (emphasis)
+
 .. highlight:: php

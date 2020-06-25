@@ -28,7 +28,7 @@ Siteimprove
 		siteimprove,page tracking,seo
 
 	:Copyright:
-		2019
+		2020
 
 	:Author:
 		Pixelant
