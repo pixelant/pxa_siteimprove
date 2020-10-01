@@ -47,7 +47,7 @@ class CompatibilityUtility
         if (!$tsfeWasSet) {
             if (self::typo3VersionIsLessThan('8.0')) {
                 if (!is_object($GLOBALS['TT'])) {
-                    $GLOBALS['TT'] = new \TYPO3\CMS\Core\TimeTracker\NullTimeTracker;
+                    $GLOBALS['TT'] = new \TYPO3\CMS\Core\TimeTracker\NullTimeTracker();
                     $GLOBALS['TT']->start();
                 }
             }
