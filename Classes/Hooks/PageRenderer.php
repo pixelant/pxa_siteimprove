@@ -51,9 +51,7 @@ class PageRenderer implements SingletonInterface
         ) {
             // Check if the user has enabled Siteimprove in the user settings, and it is not disabled for the user group
             if (
-                (int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1
-                && (!isset($GLOBALS['BE_USER']->getTSConfig()['options.']['siteImprove.']['disable'])
-                || !$GLOBALS['BE_USER']->getTSConfig()['options.']['siteImprove.']['disable'])
+                CompatibilityUtility::isEnabledForBEUser()
             ) {
                 $settings = ExtensionManagerConfigurationService::getSettings();
                 $debugMode = (isset($settings['debugMode'])) ? (bool)$settings['debugMode'] : false;
@@ -74,10 +72,10 @@ class PageRenderer implements SingletonInterface
 
                     $siteimproveOnDomReady = "
                     require(['jquery'], function($) {
-                        jQuery(document).ready(function() {
+                        $(document).ready(function() {
                             var _si = window._si || [];
                             var token = '" . $token . "';
-                            jQuery.ajax({
+                            $.ajax({
                                 url: TYPO3.settings.ajaxUrls['pixelant_siteimprove_getpagelink'],
                                 data: {
                                     id: " . (int)$pageId . "

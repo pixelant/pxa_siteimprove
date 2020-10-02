@@ -45,6 +45,13 @@ class CompatibilityUtility
         $tsfeWasSet = $GLOBALS['TSFE'] !== null;
 
         if (!$tsfeWasSet) {
+            if (self::typo3VersionIsLessThan('8.0')) {
+                if (!is_object($GLOBALS['TT'])) {
+                    $GLOBALS['TT'] = new \TYPO3\CMS\Core\TimeTracker\NullTimeTracker();
+                    $GLOBALS['TT']->start();
+                }
+            }
+
             /** @var TypoScriptFrontendController $tsfe */
             $tsfe = GeneralUtility::makeInstance(
                 TypoScriptFrontendController::class,
@@ -125,6 +132,23 @@ class CompatibilityUtility
         }
 
         return Environment::getContext();
+    }
+
+    /**
+     * Return if siteimprove enabled for BE user
+     *
+     * @return boolean
+     */
+    public static function isEnabledForBEUser()
+    {
+        if (self::typo3VersionIsLessThan('8')) {
+            return ((int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1
+                     && !$GLOBALS['BE_USER']->getTSConfigVal('options.siteImprove.disable'));
+        }
+
+        return ((int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1
+                && (!isset($GLOBALS['BE_USER']->getTSConfig()['options.']['siteImprove.']['disable'])
+                || !$GLOBALS['BE_USER']->getTSConfig()['options.']['siteImprove.']['disable']));
     }
 
     /**
