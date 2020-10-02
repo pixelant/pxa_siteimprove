@@ -41,7 +41,7 @@ class PageRendererTest extends UnitTestCase
             ['options.' => ['siteImprove.' => ['disable' => 0]]]
         );
 
-        $pageRenderer = $this->createCompatibleMock(TYPO3\CMS\Core\Page\PageRenderer::class);
+        $pageRenderer = $this->createCompatibleMock(\TYPO3\CMS\Core\Page\PageRenderer::class);
 
         $this->subject->addResources(
             [],
