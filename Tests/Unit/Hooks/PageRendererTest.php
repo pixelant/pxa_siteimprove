@@ -48,4 +48,26 @@ class PageRendererTest extends UnitTestCase
             $pageRenderer
         );
     }
+
+    /**
+     * @test
+     */
+    public function addResourcesCorrectlyIfDisabledInTSConfig()
+    {
+        $backendUserAuthentication = $this->createCompatibleMock(BackendUserAuthentication::class);
+        $GLOBALS['BE_USER'] = $backendUserAuthentication;
+
+        $GLOBALS['BE_USER']->uc = ['use_siteimprove' => 1];
+        $GLOBALS['BE_USER']->method('getTSConfigVal')->willReturn(1);
+        $GLOBALS['BE_USER']->method('getTSConfig')->willReturn(
+            ['options.' => ['siteImprove.' => ['disable' => 1]]]
+        );
+
+        $pageRenderer = $this->createCompatibleMock(\TYPO3\CMS\Core\Page\PageRenderer::class);
+
+        $this->subject->addResources(
+            [],
+            $pageRenderer
+        );
+    }
 }
