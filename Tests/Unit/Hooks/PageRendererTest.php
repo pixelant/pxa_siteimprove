@@ -33,6 +33,7 @@ class PageRendererTest extends UnitTestCase
     public function addResourcesCorrectly()
     {
         $backendUserAuthentication = $this->createCompatibleMock(BackendUserAuthentication::class);
+        $GLOBALS['BE_USER']->uc = $backendUserAuthentication;
 
         $GLOBALS['BE_USER']->uc = ['use_siteimprove' => 1];
         $GLOBALS['BE_USER']->userTS = ['options.' => ['siteImprove.' => ['disable' => 1]]];
@@ -43,7 +44,6 @@ class PageRendererTest extends UnitTestCase
             [],
             $pageRenderer
         );
-
     }
 
 }
