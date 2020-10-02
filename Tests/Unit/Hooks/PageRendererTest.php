@@ -36,7 +36,10 @@ class PageRendererTest extends UnitTestCase
         $GLOBALS['BE_USER'] = $backendUserAuthentication;
 
         $GLOBALS['BE_USER']->uc = ['use_siteimprove' => 1];
-        $GLOBALS['BE_USER']->userTS = ['options.' => ['siteImprove.' => ['disable' => 1]]];
+        $GLOBALS['BE_USER']->method('getTSConfigVal')->willReturn(0);
+        $GLOBALS['BE_USER']->method('getTSConfig')->willReturn(
+            ['options.' => ['siteImprove.' => ['disable' => 0]]]
+        );
 
         $pageRenderer = $this->createCompatibleMock(TYPO3\CMS\Core\Page\PageRenderer::class);
 
