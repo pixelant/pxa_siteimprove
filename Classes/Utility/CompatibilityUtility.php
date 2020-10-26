@@ -141,13 +141,26 @@ class CompatibilityUtility
      */
     public static function isEnabledForBEUser()
     {
+        if (
+            isset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['pxa_siteimprove']['enabledByDefault'])
+            && (bool)$GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['pxa_siteimprove']['enabledByDefault']
+        ) {
+            if (self::typo3VersionIsLessThan('8')) {
+                return ((int)$GLOBALS['BE_USER']->uc['disable_siteimprove'] === 0
+                    && (bool)$GLOBALS['BE_USER']->getTSConfigVal('options.siteImprove.enable'));
+            }
+
+            return ((int)$GLOBALS['BE_USER']->uc['disable_siteimprove'] === 0
+                && (isset($GLOBALS['BE_USER']->getTSConfig()['options.']['siteImprove.']['enable'])
+                    && (bool)$GLOBALS['BE_USER']->getTSConfig()['options.']['siteImprove.']['enable']));
+        }
         if (self::typo3VersionIsLessThan('8')) {
             return ((int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1
-                     && !$GLOBALS['BE_USER']->getTSConfigVal('options.siteImprove.disable'));
+                && !$GLOBALS['BE_USER']->getTSConfigVal('options.siteImprove.disable'));
         }
 
         return ((int)$GLOBALS['BE_USER']->uc['use_siteimprove'] === 1
-                && (!isset($GLOBALS['BE_USER']->getTSConfig()['options.']['siteImprove.']['disable'])
+            && (!isset($GLOBALS['BE_USER']->getTSConfig()['options.']['siteImprove.']['disable'])
                 || !$GLOBALS['BE_USER']->getTSConfig()['options.']['siteImprove.']['disable']));
     }
 

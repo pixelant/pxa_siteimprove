@@ -6,6 +6,9 @@
 			<trans-unit id="settings.field.use_siteimprove">
 				<source>Enable Siteimprove</source>
 			</trans-unit>
+			<trans-unit id="settings.field.disable_siteimprove">
+				<source>Disable Siteimprove</source>
+			</trans-unit>
 			<trans-unit id="tx_pxasiteimprove_domain_model_dashboard">
 				<source>Dashboard</source>
 			</trans-unit>

@@ -29,6 +29,16 @@ The following configuration options are available for the extension.
 
 .. rst-class:: dl-parameters
 
+Enable Siteimprove for all users with permissions
+   :sep:`|` :aspect:`Property name:` enabledByDefault
+   :sep:`|` :aspect:`Type:` boolean
+   :sep:`|` :aspect:`Default:` false
+
+   When this property is enabled, all users that have the User TSconfig setting
+   options.siteImprove.enable set to 1 or true will see the Siteimprove widget in
+   the page module. Users can disable Siteimprove for themselves by using the
+   setting Disable Siteimprove in the User Settings
+
 Enable debug mode for Siteimprove integration
    :sep:`|` :aspect:`Property name:` debugMode
    :sep:`|` :aspect:`Type:` boolean
@@ -75,6 +85,13 @@ Enable Siteimprove
 
    A checkbox to toggle Siteimprove on and off
 
+Disable Siteimprove
+   :sep:`|` :aspect:`Property name:` disable_siteimprove
+   :sep:`|` :aspect:`Type:` boolean
+   :sep:`|` :aspect:`Default:` false
+
+   A checkbox to disable Siteimprove although you have access to the feature
+
 .. _user-tsconfig-settings:
 
 User TSconfig settings
@@ -88,9 +105,20 @@ a whole user group through User TSconfig settings.
 
 .. rst-class:: dl-parameters
 
-siteImprove.disable
-   :sep:`|` :aspect:`Property name:` siteImprove.disable
+options.siteImprove.disable
+   :sep:`|` :aspect:`Property name:` options.siteImprove.disable
    :sep:`|` :aspect:`Type:` boolean
    :sep:`|` :aspect:`Default:` false
 
-   Toggle Siteimprove on and off for a single user or user group.
+   With this setting, you can disable Siteimprove although the editor itself
+   enabled it in the User Settings. This option only works when you have not
+   enabled Siteimprove by default.
+
+options.siteImprove.enable
+   :sep:`|` :aspect:`Property name:` options.siteImprove.enable
+   :sep:`|` :aspect:`Type:` boolean
+   :sep:`|` :aspect:`Default:` false
+
+   With this setting, you can enable Siteimprove unless the editor itself
+   disabled it in the User Settings. This option only works when you have
+   enabled Siteimprove by default.
