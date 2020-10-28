@@ -106,6 +106,9 @@ jobs:
 
     strategy:
       matrix:
+        composer-version:
+          - v1
+          - v2
         typo3-version:
           - "^7.6"
           - "^8.7"
@@ -133,11 +136,15 @@ jobs:
             database-image: mariadb:latest
         exclude:
           - typo3-version: "^7.6"
+            composer-version: v2
+          - typo3-version: "^7.6"
             php-version: 7.2
           - typo3-version: "^7.6"
             php-version: 7.3
           - typo3-version: "^7.6"
             php-version: 7.4
+          - typo3-version: "^8.7"
+            composer-version: v2
           - typo3-version: "^8.7"
             php-version: 5.5
           - typo3-version: "^8.7"
@@ -179,6 +186,7 @@ jobs:
           php-version: ${{ matrix.php-version }}
           extensions: fileinfo, filter, gd, hash, intl, json, mbstring, mysqli, openssl, pcre, session, SPL, xml, zip, zlib
           coverage: none
+          tools: composer:${{ matrix.composer-version }}
 
       - name: Checkout
         uses: actions/checkout@v1
@@ -195,6 +203,7 @@ jobs:
         env:
           TYPO3: ${{ matrix.typo3-version }}
         run: |
+          composer --version
           composer require typo3/minimal:"${{ matrix.typo3-version }}"
           composer show
 
