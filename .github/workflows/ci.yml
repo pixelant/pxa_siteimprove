@@ -113,7 +113,7 @@ jobs:
           - "^7.6"
           - "^8.7"
           - "^9.5"
-          - "^10.3"
+          - "^10.4"
         composer-dependencies:
           - highest
           #- lowest
@@ -132,7 +132,7 @@ jobs:
             database-image: mariadb:latest
           - typo3-version: "^9.5"
             database-image: mariadb:latest
-          - typo3-version: "^10.3"
+          - typo3-version: "^10.4"
             database-image: mariadb:latest
         exclude:
           - typo3-version: "^7.6"
@@ -159,13 +159,13 @@ jobs:
             php-version: 7.1
           - typo3-version: "^9.5"
             php-version: 7.2
-          - typo3-version: "^10.3"
+          - typo3-version: "^10.4"
             php-version: 5.5
-          - typo3-version: "^10.3"
+          - typo3-version: "^10.4"
             php-version: 5.6
-          - typo3-version: "^10.3"
+          - typo3-version: "^10.4"
             php-version: 7.0
-          - typo3-version: "^10.3"
+          - typo3-version: "^10.4"
             php-version: 7.1
 
     services:
