@@ -129,11 +129,11 @@ jobs:
           - typo3-version: "^7.6"
             database-image: mysql:5.7
           - typo3-version: "^8.7"
-            database-image: mariadb:latest
+            database-image: mariadb:10.5.6
           - typo3-version: "^9.5"
-            database-image: mariadb:latest
+            database-image: mariadb:10.5.6
           - typo3-version: "^10.4"
-            database-image: mariadb:latest
+            database-image: mariadb:10.5.6
         exclude:
           - typo3-version: "^7.6"
             composer-version: v2
