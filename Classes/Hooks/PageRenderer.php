@@ -61,6 +61,9 @@ class PageRenderer implements SingletonInterface
 
                 if ($pageId > 0) {
                     $domain = CompatibilityUtility::getFirstDomainInRootline($pageId);
+                    if (!$domain) {
+                        return;
+                    }
 
                     $debugScript = '';
                     if ($debugMode === true) {

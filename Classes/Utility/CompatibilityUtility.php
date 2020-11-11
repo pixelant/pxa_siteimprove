@@ -103,7 +103,7 @@ class CompatibilityUtility
      * Returns the first available domain in the rootline from $pageId
      *
      * @param $pageId
-     * @return string
+     * @return string|null
      */
     public static function getFirstDomainInRootline($pageId)
     {
@@ -115,9 +115,14 @@ class CompatibilityUtility
 
         /** @var SiteFinder $siteFinder */
         $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
-        $site = $siteFinder->getSiteByPageId($pageId);
 
-        return $site->getBase()->getHost();
+        try {
+            $site = $siteFinder->getSiteByPageId($pageId);
+            return $site->getBase()->getHost();
+        } catch (SiteNotFoundException $e) {
+        }
+
+        return null;
     }
 
     /**
