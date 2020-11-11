@@ -120,9 +120,8 @@ class CompatibilityUtility
             $site = $siteFinder->getSiteByPageId($pageId);
             return $site->getBase()->getHost();
         } catch (SiteNotFoundException $e) {
+            return null;
         }
-
-        return null;
     }
 
     /**
