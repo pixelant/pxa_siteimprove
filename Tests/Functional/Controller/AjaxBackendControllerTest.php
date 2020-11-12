@@ -19,7 +19,7 @@ class AjaxBackendControllerTest extends FunctionalTestCase
     {
         parent::setUp();
 
-        $rootPath = '/home/runner/work/pxa_siteimprove/pxa_siteimprove/';
+        $rootPath = realpath(__DIR__ . '/../../../') . '/';
 
         if (CompatibilityUtility::typo3VersionIsLessThan('8.0')) {
             $GLOBALS['TT'] = new NullTimeTracker();
